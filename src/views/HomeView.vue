@@ -13,10 +13,10 @@ import comingSoon from '@/assets/coming-soon.svg';
 <template>
     <div class="mx-auto">
       <Hero />
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">
-        <Card :image="case1" title="CASE" description="Start by reviewing requirements..." />
-        <Card :image="tars" title="TARS" description="Generates detailed test cases..." />
-        <Card :image="kipp" title="KIPP" description="Convert manual test cases..." />
+      <div class="flex justify-center gap-8 p-8">
+        <Card :image="case1" title="CASE" description="Start by reviewing requirement to detects ambiguities, inconsistencies then make document clear and complete.  " />
+        <Card :image="tars" title="TARS" description="Generates detailed test cases that cover many scenarios, from typical user interactions to overlooked edge cases. " />
+        <Card :image="kipp" title="KIPP" description="Convert manual test cases into fully functional automation test scripts. Accelerates continuous testing and feedback." />
         <Card :image="comingSoon" title="Coming soon..." description="" />
       </div>
       <Story />
