@@ -3,7 +3,7 @@
     <AutomationTestCaseSidebar />
     <div class="w-3/4 p-6">
     <AutomationTestCaseContent :id="id"/>
-    <AutomationTestResult />
+    <!--<AutomationTestResult />-->
     </div>
   </div>
 </template>
