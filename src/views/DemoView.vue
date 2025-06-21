@@ -76,6 +76,7 @@
 
         <button
           type="submit"
+          id="submit"
           class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
           aria-label="Book Appointment"
         >
