@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative min-h-screen">
     <!-- Loading Overlay -->
     <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
       <img src="@/assets/cua4_loading.gif" alt="Loading" />
@@ -72,6 +72,9 @@
         </tbody>
       </table>
     </div>
+
+
+
   </div>
 </template>
 
@@ -102,6 +105,7 @@ export default defineComponent({
 
     const fetchAutomationData = async () => {
       loading.value = true;
+      actionList.value = [];
       try {
         const response = await axios.get(`http://localhost:8080/api/automation/${props.id}`);
         const data = response.data;
@@ -120,6 +124,7 @@ export default defineComponent({
 
     const generateAutomation = async () => {
       loading.value = true;
+      actionList.value = [];
       try {
         const response = await axios.post('http://localhost:8080/api/automation/gen', {
           targetUrls: urls.value.map(url => url.link),
@@ -166,5 +171,9 @@ export default defineComponent({
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.75);
   z-index: 50;
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }
 </style>
