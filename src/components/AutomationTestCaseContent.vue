@@ -116,11 +116,9 @@
       <div v-if="activeResultTab === 'result'">
         <div class="p-4 bg-gray-50 rounded-lg">
           <p class="font-semibold text-lg">
-            Create space api testing › @api @space should create space with all configurations successfully
-            <span class="text-green-500 ml-2">✔️</span>
-          </p>
-          <p class="text-gray-500 mt-1">
-            api/media_storage/media_portal/api_test_create_space_admin.spec.ts:28
+            TEST CASE RESULT: <span
+              :class="{'text-green-500' : finalResult === 'PASSED', 'text-red-500' : finalResult !== 'PASSED'}"
+            class="ml-2">{{finalResult}}</span>
           </p>
         </div>
       </div>
@@ -152,6 +150,7 @@ export default defineComponent({
     const actionList = ref([]);
     const generatedCode = ref('');
     let automationId = ref('');
+    let finalResult = ref('');
     const loading = ref(false);
 
     const addUrl = () => {
@@ -209,6 +208,7 @@ export default defineComponent({
       try {
         const response = await axios.post(`http://localhost:8080/api/automation/${automationId.value}/run`);
         const runResult = response.data;
+        finalResult.value = runResult.finalResult;
         console.log(runResult);
       } catch (error) {
         console.error('Error Running automation:', error);
@@ -227,6 +227,7 @@ export default defineComponent({
       urls,
       actionList,
       automationId,
+      finalResult,
       generatedCode,
       loading,
       addUrl,
