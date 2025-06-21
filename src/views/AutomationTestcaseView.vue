@@ -2,7 +2,7 @@
   <div class="flex h-screen">
     <AutomationTestCaseSidebar />
     <div class="w-3/4 p-6">
-    <AutomationTestCaseContent />
+    <AutomationTestCaseContent :id="id"/>
     <AutomationTestResult />
     </div>
   </div>
