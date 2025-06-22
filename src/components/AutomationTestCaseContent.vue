@@ -5,7 +5,7 @@
       v-if="loading"
       class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50"
     >
-      <img src="@/assets/cua4_loading.gif" alt="Loading" />
+      <img src="@/assets/cua4_loading.gif" alt="Loading" class="max-w-1/2" />
     </div>
 
     <div class="flex justify-between items-center mb-4">
@@ -62,7 +62,7 @@
             <tr v-for="(url, index) in urls" :key="index" class="border-b">
               <td class="py-2 px-4 text-center text-gray-800">{{ index + 1 }}</td>
               <td class="py-2 px-4">
-                <input type="text" v-model="url.link" class="w-full border p-2 rounded" />
+                <input type="text" v-model="urls[index]" class="w-full border p-2 rounded" />
               </td>
               <td class="py-2 px-4 text-center">
                 <button @click="removeUrl(index)" class="text-red-500">-</button>
@@ -70,6 +70,7 @@
             </tr>
           </tbody>
         </table>
+        <div v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</div>
         <div class="flex justify-between mt-4">
           <button @click="addUrl" class="text-red-500 border border-red-500 px-4 py-2 rounded">
             Add more
@@ -88,7 +89,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="action in actionList" :key="action.id" class="border-b">
+            <tr v-for="action in testAutomation.actionList.actions" :key="action.id" class="border-b">
               <td class="py-2 px-4 text-gray-800">
                 {{ action.action }} {{ action.itemAlias ? ' -> ' + action.itemAlias : '' }}
               </td>
@@ -106,7 +107,7 @@
         <pre><code class="language-java" v-html="generatedCode"></code></pre>
         -->
         <textarea
-          v-model="generatedCode"
+          v-model="testAutomation.generatedCode"
           class="w-full min-h-200 border p-2 rounded font-mono text-sm"
           readonly
         ></textarea>
@@ -146,11 +147,11 @@
             TEST CASE RESULT:
             <span
               :class="{
-                'text-green-500': finalResult === 'PASSED',
-                'text-red-500': finalResult !== 'PASSED',
+                'text-green-500': runResult.finalResult === 'PASSED',
+                'text-red-500': runResult.finalResult !== 'PASSED',
               }"
               class="ml-2"
-              >{{ finalResult }}</span
+              >{{ runResult.finalResult }}</span
             >
           </p>
         </div>
@@ -161,114 +162,93 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref } from 'vue'
+import type { PropType } from 'vue'
 import axios from 'axios'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/atom-one-dark.css'
 
-export default defineComponent({
+export default {
+  data() {
+    return {
+      activeTab: 'design',
+      activeResultTab: 'result',
+      testAutomation: { urls: '', id: null, actionList: { actions: [{}] }, generatedCode: '' },
+      urls: [''],
+      loading: false,
+      errorMessage: '',
+      runResult: {},
+    }
+  },
   props: {
     id: {
       type: String as PropType<string>,
       required: true,
     },
   },
-  setup(props) {
-    const activeTab = ref('design')
-    const activeResultTab = ref('result')
-    const urls = ref([{ link: '' }])
-    const actionList = ref([])
-    const generatedCode = ref('')
-    let automationId = ref('')
-    let finalResult = ref('')
-    const loading = ref(false)
-
-    const addUrl = () => {
-      urls.value.push({ link: '' })
-    }
-
-    const removeUrl = (index: number) => {
-      urls.value.splice(index, 1)
-    }
-
-    const fetchAutomationData = async () => {
-      loading.value = true
-      actionList.value = []
+  mounted() {
+    this.fetchAutomationData()
+  },
+  methods: {
+    addUrl() {
+      this.urls.push('')
+    },
+    removeUrl(index: number) {
+      this.urls.splice(index, 1)
+    },
+    async fetchAutomationData() {
+      this.loading = true
       try {
-        const response = await axios.get(`http://localhost:8080/api/automation/${props.id}`)
-        const data = response.data
+        const response = await axios.get(`http://localhost:8080/api/automation/${this.id}`)
+        this.testAutomation = response.data
+        console.log(this.testAutomation)
 
         // Convert the URLs string into an array of objects
-        urls.value = data.urls.split('|').map((link: string) => ({ link }))
-
-        automationId.value = data.id
-        actionList.value = data.actionList.actions
-        generatedCode.value = data.generatedCode
+        this.urls = this.testAutomation.urls.split('|')
         //generatedCode.value = hljs.highlight(data.generatedCode, { language: 'java' }).value;
       } catch (error) {
         console.error('Error fetching automation data:', error)
       } finally {
-        loading.value = false
+        this.loading = false
       }
-    }
+    },
+    async generateAutomation() {
+      this.errorMessage = ''
+      if (!this.urls.every((url) => url.trim() !== '')) {
+        this.errorMessage = 'Please ensure all URLs are filled out.'
+        console.log(this.errorMessage);
+        return
+      }
 
-    const generateAutomation = async () => {
-      loading.value = true
-      actionList.value = []
+      this.loading = true
       try {
         const response = await axios.post('http://localhost:8080/api/automation/gen', {
-          targetUrls: urls.value.map((url) => url.link),
-          testCaseId: props.id,
+          targetUrls: this.urls,
+          testCaseId: this.id,
         })
 
-        const data = response.data
-        automationId.value = data.id
-        actionList.value = data.actionList.actions
-        generatedCode.value = data.generatedCode
+        this.testAutomation = response.data
+        console.log(this.testAutomation)
         //generatedCode.value = hljs.highlight(data.generatedCode, { language: 'java' }).value;
       } catch (error) {
         console.error('Error generating automation:', error)
       } finally {
-        loading.value = false
+        this.loading = false
       }
-    }
-
-    const runAutomation = async () => {
-      loading.value = true
+    },
+    async runAutomation() {
+      this.loading = true
       try {
         const response = await axios.post(
-          `http://localhost:8080/api/automation/${automationId.value}/run`,
+          `http://localhost:8080/api/automation/${this.testAutomation.id}/run`,
         )
-        const runResult = response.data
-        finalResult.value = runResult.finalResult
-        console.log(runResult)
+        this.runResult = response.data
+        console.log(this.runResult)
       } catch (error) {
         console.error('Error Running automation:', error)
       } finally {
-        loading.value = false
+        this.loading = false
       }
-    }
-
-    onMounted(() => {
-      fetchAutomationData()
-    })
-
-    return {
-      activeTab,
-      activeResultTab,
-      urls,
-      actionList,
-      automationId,
-      finalResult,
-      generatedCode,
-      loading,
-      addUrl,
-      removeUrl,
-      generateAutomation,
-      runAutomation,
-    }
+    },
   },
-})
+}
 </script>
 
 <style scoped>
