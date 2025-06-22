@@ -85,7 +85,8 @@
           <thead>
             <tr>
               <th class="bg-red-500 text-white py-2 px-4 rounded-tl-md">ACTION / TARGET</th>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tr-md">VALUE</th>
+              <th class="bg-red-500 text-white py-2 px-4 rounded-tl-md">VALUE</th>
+              <th class="bg-red-500 text-white py-2 px-4 rounded-tr-md">RUN RESULT</th>
             </tr>
           </thead>
           <tbody>
@@ -94,6 +95,9 @@
                 {{ action.action }} {{ action.itemAlias ? ' -> ' + action.itemAlias : '' }}
               </td>
               <td class="py-2 px-4 text-gray-500">{{ action.value || '' }}</td>
+              <td class="py-2 px-4">
+                <p>{{action.result}}</p>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -156,7 +160,14 @@
           </p>
         </div>
       </div>
-      <div v-if="activeResultTab === 'console'">CONSOLE</div>
+      <div v-if="activeResultTab === 'console'">
+        <p class="font-semibold text-lg">CONSOLE:</p>
+        <textarea
+          v-model="runResult.error"
+          class="w-full min-h-100 border p-2 rounded font-mono text-sm"
+          readonly
+        ></textarea>
+      </div>
     </div>
   </div>
 </template>
@@ -170,7 +181,7 @@ export default {
     return {
       activeTab: 'design',
       activeResultTab: 'result',
-      testAutomation: { urls: '', id: null, actionList: { actions: [{}] }, generatedCode: '' },
+      testAutomation: { urls: '', id: null, actionList: { actions: [{id: null, result: ''}] }, generatedCode: '' },
       urls: [''],
       loading: false,
       errorMessage: '',
@@ -240,7 +251,15 @@ export default {
           `http://localhost:8080/api/automation/${this.testAutomation.id}/run`,
         )
         this.runResult = response.data
-        console.log(this.runResult)
+
+        this.testAutomation.actionList.actions.forEach((action) => {
+          if (action.id != null && this.runResult.hasOwnProperty(action.id)) {
+            action.result = this.runResult[action.id]
+          } else {
+            action.result = 'FAILED';
+          }
+        })
+
       } catch (error) {
         console.error('Error Running automation:', error)
       } finally {
