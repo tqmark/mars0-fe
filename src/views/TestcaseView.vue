@@ -14,32 +14,32 @@ const { id } = toRefs(route.params);
       <p>Validate that users can log in successfully with correct credentials and receive appropriate error messages with incorrect credentials</p>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">TYPE</h3>
         <p>Automated</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">PRIORITY</h3>
         <p>5 - Must Test</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">ESTIMATE</h3>
         <p>None</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">MILESTONE</h3>
         <p>None</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">REFERENCES</h3>
         <p>MP-1790</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">TAGS</h3>
         <p>1.3</p>
       </div>
-      <div>
+      <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">AUTOMATION TYPE</h3>
         <p>None</p>
       </div>
@@ -53,10 +53,10 @@ const { id } = toRefs(route.params);
     <div>
       <h3 class="font-bold mb-2">STEPS</h3>
       <table class="min-w-full bg-white">
-        <thead>
+        <thead class="bg-red-500 text-white">
         <tr class="bg-red-custom text-white">
-          <th class="w-1/2 p-2 text-left">STEP</th>
-          <th class="w-1/2 p-2 text-left">EXPECTED RESULT</th>
+          <th class="rounded-s-lg w-1/2 p-2 text-left">STEP</th>
+          <th dir="rtl"  class="rounded-s-lg w-1/2 p-2 text-left">EXPECTED RESULT</th>
         </tr>
         </thead>
         <tbody>
