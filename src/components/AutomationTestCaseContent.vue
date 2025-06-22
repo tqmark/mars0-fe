@@ -1,18 +1,35 @@
 <template>
   <div class="relative min-h-screen">
     <!-- Loading Overlay -->
-    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+    <div
+      v-if="loading"
+      class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50"
+    >
       <img src="@/assets/cua4_loading.gif" alt="Loading" />
     </div>
 
     <div class="flex justify-between items-center mb-4">
       <div class="flex space-x-4">
-        <button @click="activeTab = 'design'"
-                :class="{'text-white bg-red-500' : activeTab === 'design', 'text-red-500 border border-red-500' : activeTab !== 'design'}"
-                class="px-4 py-2 rounded">Design</button>
-        <button @click="activeTab = 'code'"
-                :class="{'text-white bg-red-500' : activeTab === 'code', 'text-red-500 border border-red-500' : activeTab !== 'code'}"
-                class="px-4 py-2 rounded">Script</button>
+        <button
+          @click="activeTab = 'design'"
+          :class="{
+            'text-white bg-red-500': activeTab === 'design',
+            'text-red-500 border border-red-500': activeTab !== 'design',
+          }"
+          class="px-4 py-2 rounded"
+        >
+          Design
+        </button>
+        <button
+          @click="activeTab = 'code'"
+          :class="{
+            'text-white bg-red-500': activeTab === 'code',
+            'text-red-500 border border-red-500': activeTab !== 'code',
+          }"
+          class="px-4 py-2 rounded"
+        >
+          Script
+        </button>
       </div>
       <div class="flex space-x-4">
         <button class="text-red-500 border border-red-500 px-4 py-2 rounded">Edit</button>
@@ -22,7 +39,9 @@
         >
           Generate Automation
         </button>
-        <button @click="runAutomation()" class="text-white bg-red-500 px-4 py-2 rounded">Run</button>
+        <button @click="runAutomation()" class="text-white bg-red-500 px-4 py-2 rounded">
+          Run
+        </button>
       </div>
     </div>
 
@@ -78,7 +97,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
 
     <div v-if="activeTab === 'code'">
@@ -95,19 +113,28 @@
       </div>
     </div>
 
-
     <!-- RESULT & CONSOLE -->
     <div class="p-6 bg-white rounded-lg">
       <!-- Tabs -->
       <div class="flex justify-around border-b mb-4">
-        <button @click="activeResultTab = 'result'"
-                :class="{'text-red-500 border-b-2 border-red-500' : activeResultTab === 'result', 'text-gray-500 hover:text-red-500': activeResultTab !== 'result'}"
-          class="py-2 px-4 focus:outline-none">
+        <button
+          @click="activeResultTab = 'result'"
+          :class="{
+            'text-red-500 border-b-2 border-red-500': activeResultTab === 'result',
+            'text-gray-500 hover:text-red-500': activeResultTab !== 'result',
+          }"
+          class="py-2 px-4 focus:outline-none"
+        >
           TEST RESULTS
         </button>
-        <button @click="activeResultTab = 'console'"
-                :class="{'text-red-500 border-b-2 border-red-500' : activeResultTab === 'console', 'text-gray-500 hover:text-red-500': activeResultTab !== 'console'}"
-          class="py-2 px-4 focus:outline-none">
+        <button
+          @click="activeResultTab = 'console'"
+          :class="{
+            'text-red-500 border-b-2 border-red-500': activeResultTab === 'console',
+            'text-gray-500 hover:text-red-500': activeResultTab !== 'console',
+          }"
+          class="py-2 px-4 focus:outline-none"
+        >
           CONSOLE
         </button>
       </div>
@@ -116,110 +143,115 @@
       <div v-if="activeResultTab === 'result'">
         <div class="p-4 bg-gray-50 rounded-lg">
           <p class="font-semibold text-lg">
-            TEST CASE RESULT: <span
-              :class="{'text-green-500' : finalResult === 'PASSED', 'text-red-500' : finalResult !== 'PASSED'}"
-            class="ml-2">{{finalResult}}</span>
+            TEST CASE RESULT:
+            <span
+              :class="{
+                'text-green-500': finalResult === 'PASSED',
+                'text-red-500': finalResult !== 'PASSED',
+              }"
+              class="ml-2"
+              >{{ finalResult }}</span
+            >
           </p>
         </div>
       </div>
-      <div v-if="activeResultTab === 'console'">
-        CONSOLE
-      </div>
+      <div v-if="activeResultTab === 'console'">CONSOLE</div>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref } from 'vue';
-import axios from 'axios';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
+import { defineComponent, PropType, onMounted, ref } from 'vue'
+import axios from 'axios'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/atom-one-dark.css'
 
 export default defineComponent({
   props: {
     id: {
       type: String as PropType<string>,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
-    const activeTab = ref('design');
-    const activeResultTab = ref('result');
-    const urls = ref([{ link: "" }]);
-    const actionList = ref([]);
-    const generatedCode = ref('');
-    let automationId = ref('');
-    let finalResult = ref('');
-    const loading = ref(false);
+    const activeTab = ref('design')
+    const activeResultTab = ref('result')
+    const urls = ref([{ link: '' }])
+    const actionList = ref([])
+    const generatedCode = ref('')
+    let automationId = ref('')
+    let finalResult = ref('')
+    const loading = ref(false)
 
     const addUrl = () => {
-      urls.value.push({ link: "" });
-    };
+      urls.value.push({ link: '' })
+    }
 
     const removeUrl = (index: number) => {
-      urls.value.splice(index, 1);
-    };
+      urls.value.splice(index, 1)
+    }
 
     const fetchAutomationData = async () => {
-      loading.value = true;
-      actionList.value = [];
+      loading.value = true
+      actionList.value = []
       try {
-        const response = await axios.get(`http://localhost:8080/api/automation/${props.id}`);
-        const data = response.data;
+        const response = await axios.get(`http://localhost:8080/api/automation/${props.id}`)
+        const data = response.data
 
         // Convert the URLs string into an array of objects
-        urls.value = data.urls.split('|').map((link: string) => ({ link }));
+        urls.value = data.urls.split('|').map((link: string) => ({ link }))
 
-        automationId.value = data.id;
-        actionList.value = data.actionList.actions;
-        generatedCode.value = data.generatedCode;
+        automationId.value = data.id
+        actionList.value = data.actionList.actions
+        generatedCode.value = data.generatedCode
         //generatedCode.value = hljs.highlight(data.generatedCode, { language: 'java' }).value;
       } catch (error) {
-        console.error('Error fetching automation data:', error);
+        console.error('Error fetching automation data:', error)
       } finally {
-        loading.value = false;
+        loading.value = false
       }
-    };
+    }
 
     const generateAutomation = async () => {
-      loading.value = true;
-      actionList.value = [];
+      loading.value = true
+      actionList.value = []
       try {
         const response = await axios.post('http://localhost:8080/api/automation/gen', {
-          targetUrls: urls.value.map(url => url.link),
-          testCaseId: props.id
-        });
+          targetUrls: urls.value.map((url) => url.link),
+          testCaseId: props.id,
+        })
 
-        const data = response.data;
-        automationId.value = data.id;
-        actionList.value = data.actionList.actions;
-        generatedCode.value = data.generatedCode;
+        const data = response.data
+        automationId.value = data.id
+        actionList.value = data.actionList.actions
+        generatedCode.value = data.generatedCode
         //generatedCode.value = hljs.highlight(data.generatedCode, { language: 'java' }).value;
       } catch (error) {
-        console.error('Error generating automation:', error);
+        console.error('Error generating automation:', error)
       } finally {
-        loading.value = false;
+        loading.value = false
       }
-    };
+    }
 
     const runAutomation = async () => {
-      loading.value = true;
+      loading.value = true
       try {
-        const response = await axios.post(`http://localhost:8080/api/automation/${automationId.value}/run`);
-        const runResult = response.data;
-        finalResult.value = runResult.finalResult;
-        console.log(runResult);
+        const response = await axios.post(
+          `http://localhost:8080/api/automation/${automationId.value}/run`,
+        )
+        const runResult = response.data
+        finalResult.value = runResult.finalResult
+        console.log(runResult)
       } catch (error) {
-        console.error('Error Running automation:', error);
+        console.error('Error Running automation:', error)
       } finally {
-        loading.value = false;
+        loading.value = false
       }
     }
 
     onMounted(() => {
-      fetchAutomationData();
-    });
+      fetchAutomationData()
+    })
 
     return {
       activeTab,
@@ -233,10 +265,10 @@ export default defineComponent({
       addUrl,
       removeUrl,
       generateAutomation,
-      runAutomation
-    };
-  }
-});
+      runAutomation,
+    }
+  },
+})
 </script>
 
 <style scoped>

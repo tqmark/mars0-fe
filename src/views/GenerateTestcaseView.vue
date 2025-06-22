@@ -6,7 +6,7 @@
         :key="index"
         class="px-4 py-2 rounded-md"
         :class="{
-          'bg-red-500 text-white': selectedCategory === suite.category,
+          'bg-[#] text-white': selectedCategory === suite.category,
           'bg-gray-200': selectedCategory !== suite.category,
         }"
         @click="selectedCategory = suite.category"

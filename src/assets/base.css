@@ -56,3 +56,26 @@
   box-sizing: border-box;
 }
 
+
+.bg-red-custom {
+  background-color: #DD4444;
+}
+
+color-red-custom {
+  color: #DD4444;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+button {
+  border-radius: 0.7rem;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  button:hover {
+    background-color: #BB3333; /* Slightly darker shade */
+    border-color: #AA2222;
+  }

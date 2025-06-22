@@ -54,7 +54,7 @@ const { id } = toRefs(route.params);
       <h3 class="font-bold mb-2">STEPS</h3>
       <table class="min-w-full bg-white">
         <thead>
-        <tr class="bg-red-500 text-white">
+        <tr class="bg-red-custom text-white">
           <th class="w-1/2 p-2 text-left">STEP</th>
           <th class="w-1/2 p-2 text-left">EXPECTED RESULT</th>
         </tr>

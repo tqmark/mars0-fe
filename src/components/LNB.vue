@@ -1,8 +1,41 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import LogoIconWhite from '@/components/icon/LogoIconWhite.vue'
+import { useRoute } from 'vue-router'
+import dashboardIcon from '@/assets/dashboard.svg'
+import inventoryIcon from '@/assets/inventory.svg'
+import analyzeIcon from '@/assets/analyze.svg'
+import arrowDownIcon from '@/assets/arrowDown.svg'
+const expandedSection = ref(null)
+const isCollapsed = ref(false)
+const route = useRoute()
+const toggleSection = (section: any) => {
+  expandedSection.value = expandedSection.value === section ? null : section
+}
+
+const toggleNavbar = () => {
+  isCollapsed.value = !isCollapsed.value
+}
+
+const isAnalyzeSpec = computed(() => {
+  return route.path === '/analyze-specs'
+})
+
+const isAnalyzeTestCase = computed(() => {
+  return route.path === '/analyze-testcases'
+})
+const isDemo = computed(() => {
+  return route.path === '/demo'
+})
+</script>
+
+<style scoped></style>
+
 <template>
   <div class="flex">
     <div
       :class="[
-        'bg-red-500 h-screen text-white transition-all duration-300',
+        'bg-red-custom h-screen text-white transition-all duration-300',
         isCollapsed ? 'w-16' : 'w-64',
       ]"
     >
@@ -19,24 +52,40 @@
           @click="toggleSection('dashboard')"
           class="p-4 hover:bg-red-600 cursor-pointer flex items-center"
         >
-          <i class="icon-dashboard mr-2"></i> <span v-if="!isCollapsed">Dashboard</span>
+          <img :src="dashboardIcon" alt="Card Image" class="pr-4" />
+          <span v-if="!isCollapsed">Dashboard</span>
         </li>
         <li>
           <div
             @click="toggleSection('inventory')"
-            class="p-4 hover:bg-red-600 cursor-pointer flex items-center justify-between"
+            class="p-4 bg-[rgba(255,255,255,0.5)] hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
-            <span><i class="icon-folder mr-2"></i> <span v-if="!isCollapsed">Inventory</span></span>
-            <span v-if="expandedSection === 'inventory' && !isCollapsed">-</span>
-            <span v-else-if="!isCollapsed">+</span>
+            <div class="flex">
+              <img :src="inventoryIcon" alt="Card Image" class="pr-4" />
+              <span >Inventory</span>
+          </div>
+            <img
+              v-if="expandedSection === 'inventory' && !isCollapsed"
+              :src="arrowDownIcon"
+              alt="Arrow Icon"
+              class="pr-4"
+            />
+            <img
+              v-else-if="!isCollapsed"
+              :src="arrowDownIcon"
+              alt="Arrow Icon"
+              class="rotate-180 pl-4"
+            />
           </div>
           <ul v-if="expandedSection === 'inventory' && !isCollapsed" class="pl-8">
-            <li class="py-2 hover:bg-red-600 cursor-pointer">
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer"
+              :class="{'bg-red-600 rounded-xl': isAnalyzeSpec }"
+            >
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
-            <li class="py-2 hover:bg-red-600 cursor-pointer">Manual test case</li>
-            <li class="py-2 hover:bg-red-600 cursor-pointer">Automation test case</li>
-            <li class="py-2 hover:bg-red-600 cursor-pointer">Element Locator</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Manual test case</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Automation test case</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Element Locator</li>
           </ul>
         </li>
         <li>
@@ -44,18 +93,30 @@
             @click="toggleSection('analyze')"
             class="p-4 hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
-            <span><i class="icon-analyze mr-2"></i> <span v-if="!isCollapsed">Analyze</span></span>
-            <span v-if="expandedSection === 'analyze' && !isCollapsed">-</span>
-            <span v-else-if="!isCollapsed">+</span>
+            <div class="flex">
+              <img :src="analyzeIcon" alt="Card Image" class="pr-4" /> <span v-if="!isCollapsed">Analyze</span></div>
+            <img
+              v-if="expandedSection === 'analyze' && !isCollapsed"
+              :src="arrowDownIcon"
+              alt="Arrow Icon"
+              class="pr-4"
+            />
+            <img
+              v-else-if="!isCollapsed"
+              :src="arrowDownIcon"
+              alt="Arrow Icon"
+              class="rotate-180 pl-4"
+            />
+
           </div>
           <ul v-if="expandedSection === 'analyze' && !isCollapsed" class="pl-8">
-            <li class="py-2 hover:bg-red-600 cursor-pointer">
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
-            <li class="py-2 hover:bg-red-600 cursor-pointer">
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">
               <RouterLink to="/analyze-testcases">Generate test case</RouterLink>
             </li>
-            <li class="py-2 hover:bg-red-600 cursor-pointer">Element detector</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Element detector</li>
           </ul>
         </li>
         <li class="p-4 hover:bg-red-600 cursor-pointer flex items-center">
@@ -64,30 +125,14 @@
       </ul>
       <div class="mt-auto p-4">
         <div class="py-2 hover:bg-red-600 cursor-pointer flex items-center">
-          <i class="icon-help mr-2"></i>  <RouterLink to="/demo" v-if="!isCollapsed">Demo</RouterLink>
+          <i class="icon-help mr-2"></i>
+          <RouterLink to="/demo" v-if="!isCollapsed">Demo</RouterLink>
         </div>
         <div class="py-2 hover:bg-red-600 cursor-pointer flex items-center">
-          <i class="icon-help mr-2"></i><RouterLink to="/confirmation" v-if="!isCollapsed">confirmation</RouterLink>
+          <i class="icon-help mr-2"></i>
+          <RouterLink to="/confirmation" v-if="!isCollapsed">confirmation</RouterLink>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import LogoIconWhite from '@/components/icon/LogoIconWhite.vue'
-
-const expandedSection = ref(null)
-const isCollapsed = ref(false)
-
-const toggleSection = (section: any) => {
-  expandedSection.value = expandedSection.value === section ? null : section
-}
-
-const toggleNavbar = () => {
-  isCollapsed.value = !isCollapsed.value
-}
-</script>
-
-<style scoped></style>

@@ -2,15 +2,36 @@
 import { ref } from 'vue'
 import LeftIcon from '@/components/icon/LeftIcon.vue'
 import RightIcon from '@/components/icon/RightIcon.vue'
+import { useRouter } from 'vue-router'
 
-const content = ref(' ')
+
+const router = useRouter()
+const url = ref('');
+
+const navigateToSpec = () => {
+  router.push({ name: 'analyze-specs' })
+}
+
+const navigateToTestCase = () => {
+  router.push({ name: 'analyze-testcases' })
+}
+
+const handleGenerateSpec = () => {
+  // Logic to handle spec generation
+  navigateToSpec()
+}
+const handleGenerateTestCase = () => {
+  // Logic to handle test case generation
+  navigateToTestCase()
+}
+
 </script>
 <template>
   <section
     class="bg-cover bg-center p-8 flex justify-center items-center h-[540px]"
     style="background-image: url('/mars0-fe/banner.png')"
   >
-    <div class="relative w-3/5">
+    <div class="relative w-[42%]">
       <!-- Left Icon -->
       <div class="absolute top-[68px] left-[-170px] -mt-4 -ml-4 z-0">
         <LeftIcon />
@@ -25,6 +46,7 @@ const content = ref(' ')
         <div class="flex-1 mr-4">
           <input
             type="text"
+            v-model="url"
             placeholder="Paste your link here"
             class="w-full p-2 border rounded-[6px] mb-2"
           />
@@ -39,13 +61,13 @@ const content = ref(' ')
           </div>
         </div>
         <div class="flex flex-col space-y-2 justify-between">
-          <button class="bg-red-500 text-white py-2 px-4 rounded-[8px]">
+          <button @click="handleGenerateSpec" class="bg-red-custom text-white py-2 cursor-pointer px-4 rounded-[8px]">
             Review specs
           </button>
-          <button class="bg-red-500 text-white py-2 px-4 rounded-[8px]">
+          <button @click="handleGenerateTestCase" class="bg-red-custom text-white cursor-pointer py-2 px-4 rounded-[8px]">
             Generate test case
           </button>
-          <button class="bg-red-500 text-white py-2 px-4 rounded-[8px]">
+          <button class="bg-red-custom text-white py-2 cursor-pointer px-4 rounded-[8px]">
             Generate web element
           </button>
         </div>

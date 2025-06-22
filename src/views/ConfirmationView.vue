@@ -31,7 +31,7 @@
       <div class="flex justify-center">
         <button
           @click="goToHomepage"
-          class="mt-8 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+          class="mt-8 bg-red-custom text-white py-2 px-4 rounded hover:bg-red-600"
         >
           Go to Homepage
         </button>
