@@ -30,15 +30,15 @@
         </button>
       </div>
       <div class="flex space-x-2">
-        <button class="btn-secondary border px-4 py-2 rounded">Edit</button>
+        <button class="btn-secondary border px-4 py-2 rounded"><font-awesome-icon :icon="['fas', 'pen']" /> Edit</button>
         <button
           @click="generateAutomation()"
           class="btn bg-red-custom text-white border px-4 py-2 rounded"
         >
-          Generate Automation
+          <font-awesome-icon :icon="['fas', 'rocket']" /> Generate Automation
         </button>
         <button @click="runAutomation()" class="btn bg-red-custom text-white px-4 py-2 rounded">
-          Run
+          <font-awesome-icon :icon="['fas', 'play']" /> Run
         </button>
       </div>
     </div>
