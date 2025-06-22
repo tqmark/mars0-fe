@@ -104,8 +104,9 @@
                 {{ action.action }} {{ action.itemAlias ? ' -> ' + action.itemAlias : '' }}
               </td>
               <td class="py-2 px-4 text-gray-500">{{ action.value || '' }}</td>
-              <td class="py-2 px-4">
-                <p>{{ action.result }}</p>
+              <td class="py-2 px-4" style="text-align: center">
+                <p v-if="action.result === 'PASSED'"><font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2" /></p>
+                <p v-if="action.result === 'FAILED'"><font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2" /></p>
               </td>
             </tr>
           </tbody>
@@ -151,7 +152,7 @@
       <!-- Content -->
       <div v-if="activeResultTab === 'result'">
         <div class="p-4 bg-gray-50 rounded-lg">
-          <p class="font-semibold text-lg">
+          <p class="font-semibold text-lg mr-2">
             TEST CASE RESULT:
             <span
               :class="{
@@ -159,8 +160,9 @@
                 'text-red-500': runResult.finalResult !== 'PASSED',
               }"
               class="ml-2"
-              >{{ runResult.finalResult }}</span
-            >
+              >{{ runResult.finalResult }}</span>
+            <span v-if="runResult.finalResult === 'PASSED'"><font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2" /></span>
+            <span v-if="runResult.finalResult === 'FAILED'"><font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2"/></span>
           </p>
         </div>
       </div>
