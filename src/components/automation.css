@@ -1,0 +1,53 @@
+/* Tab Buttons */
+.tab-group {
+  border: 1px solid #dedee0;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.tab-btn {
+  padding: 8px 20px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background-color: #DD4444;
+  color: white;
+}
+
+.tab-btn:hover:not(.active) {
+  background-color: #f3f4f6;
+}
+
+/* Button Styles */
+.btn {
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  border-radius: 8px;
+  background-color: white;
+  color: #DD4444;
+}
+
+.btn-secondary:hover {
+  color: white;
+}
+
+.text-red-custom {
+  color: #DD4444;
+}
+
+.input-grey {
+  border: #d3d6da solid 1px;
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f3f4f6;
+}

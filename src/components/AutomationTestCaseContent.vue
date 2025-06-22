@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-screen">
+  <div class="relative min-h-screen bg-white">
     <!-- Loading Overlay -->
     <div
       v-if="loading"
@@ -9,94 +9,103 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-      <div class="flex space-x-4">
+      <div class="flex space-x-1 tab-group">
         <button
           @click="activeTab = 'design'"
           :class="{
-            'text-white bg-red-500': activeTab === 'design',
-            'text-red-500 border border-red-500': activeTab !== 'design',
+            active: activeTab === 'design',
           }"
-          class="px-4 py-2 rounded"
+          class="px-4 py-2 rounded tab-btn"
         >
           Design
         </button>
         <button
           @click="activeTab = 'code'"
           :class="{
-            'text-white bg-red-500': activeTab === 'code',
-            'text-red-500 border border-red-500': activeTab !== 'code',
+            active: activeTab === 'code',
           }"
-          class="px-4 py-2 rounded"
+          class="px-4 py-2 rounded tab-btn"
         >
           Script
         </button>
       </div>
-      <div class="flex space-x-4">
-        <button class="text-red-500 border border-red-500 px-4 py-2 rounded">Edit</button>
+      <div class="flex space-x-2">
+        <button class="btn-secondary border px-4 py-2 rounded">Edit</button>
         <button
           @click="generateAutomation()"
-          class="text-red-500 border border-red-500 px-4 py-2 rounded"
+          class="btn bg-red-custom text-white border px-4 py-2 rounded"
         >
           Generate Automation
         </button>
-        <button @click="runAutomation()" class="text-white bg-red-500 px-4 py-2 rounded">
+        <button @click="runAutomation()" class="btn bg-red-custom text-white px-4 py-2 rounded">
           Run
         </button>
       </div>
     </div>
 
     <div v-if="activeTab === 'design'">
-      <h2 class="text-2xl font-bold">Generated test case,...</h2>
-      <p>Check the total number of days in February to know if the year is a leap year</p>
+      <h2 class="text-2xl font-bold">{{ testAutomation.testCaseName }}</h2>
+      <p>{{ testAutomation.description }}</p>
       <div class="w-full mt-8">
         <h3 class="font-bold mb-4">SOURCE (input all Links used for this test case)</h3>
         <table class="min-w-full border-collapse">
           <thead>
             <tr>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tl-md w-1/12">ID</th>
-              <th class="bg-red-500 text-white py-2 px-4">URL</th>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tr-md w-1/12">Action</th>
+              <th class="bg-red-custom text-white py-2 px-4 rounded-tl-lg rounded-bl-lg w-1/12">
+                ID
+              </th>
+              <th class="bg-red-custom text-white py-2 px-4">URL</th>
+              <th class="bg-red-custom text-white py-2 px-4 rounded-tr-lg rounded-br-lg w-1/12">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(url, index) in urls" :key="index" class="border-b">
+            <tr v-for="(url, index) in urls" :key="index" class="">
               <td class="py-2 px-4 text-center text-gray-800">{{ index + 1 }}</td>
               <td class="py-2 px-4">
-                <input type="text" v-model="urls[index]" class="w-full border p-2 rounded" />
+                <input
+                  type="text"
+                  v-model="urls[index]"
+                  class="w-full border p-2 rounded input-grey"
+                />
               </td>
               <td class="py-2 px-4 text-center">
-                <button @click="removeUrl(index)" class="text-red-500">-</button>
+                <button @click="removeUrl(index)" class="btn-secondary px-4 py-2">-</button>
               </td>
             </tr>
           </tbody>
         </table>
-        <div v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</div>
+        <div v-if="errorMessage" class="text-red-custom mt-2">{{ errorMessage }}</div>
         <div class="flex justify-between mt-4">
-          <button @click="addUrl" class="text-red-500 border border-red-500 px-4 py-2 rounded">
+          <button @click="addUrl" class="btn-secondary border px-4 py-2 rounded btn-secondary">
             Add more
           </button>
-          <button class="text-white bg-red-500 px-6 py-2 rounded">Next</button>
         </div>
       </div>
 
       <div class="w-full mt-8">
         <h2 class="text-lg font-bold mb-4">STEPS</h2>
-        <table class="min-w-full border-collapse">
+        <table class="min-w-full border-collapse striped">
           <thead>
             <tr>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tl-md">ACTION / TARGET</th>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tl-md">VALUE</th>
-              <th class="bg-red-500 text-white py-2 px-4 rounded-tr-md">RUN RESULT</th>
+              <th class="bg-red-custom text-white py-2 px-4 rounded-tl-lg rounded-bl-lg">
+                ACTION / TARGET
+              </th>
+              <th class="bg-red-custom text-white py-2 px-4">VALUE</th>
+              <th class="bg-red-custom text-white py-2 px-4 rounded-tr-lg rounded-br-lg">
+                RUN RESULT
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="action in testAutomation.actionList.actions" :key="action.id" class="border-b">
+            <tr v-for="action in testAutomation.actionList.actions" :key="action.id" class="">
               <td class="py-2 px-4 text-gray-800">
                 {{ action.action }} {{ action.itemAlias ? ' -> ' + action.itemAlias : '' }}
               </td>
               <td class="py-2 px-4 text-gray-500">{{ action.value || '' }}</td>
               <td class="py-2 px-4">
-                <p>{{action.result}}</p>
+                <p>{{ action.result }}</p>
               </td>
             </tr>
           </tbody>
@@ -119,26 +128,21 @@
     </div>
 
     <!-- RESULT & CONSOLE -->
-    <div class="p-6 bg-white rounded-lg">
+    <div class="bg-white w-full mt-8 mb-16">
+      <h2 class="text-lg font-bold mb-4">AUTOMATION Result</h2>
       <!-- Tabs -->
-      <div class="flex justify-around border-b mb-4">
+      <div class="flex space-x-1 tab-group">
         <button
           @click="activeResultTab = 'result'"
-          :class="{
-            'text-red-500 border-b-2 border-red-500': activeResultTab === 'result',
-            'text-gray-500 hover:text-red-500': activeResultTab !== 'result',
-          }"
-          class="py-2 px-4 focus:outline-none"
+          :class="{ active: activeResultTab === 'result' }"
+          class="px-4 py-2 rounded tab-btn"
         >
           TEST RESULTS
         </button>
         <button
           @click="activeResultTab = 'console'"
-          :class="{
-            'text-red-500 border-b-2 border-red-500': activeResultTab === 'console',
-            'text-gray-500 hover:text-red-500': activeResultTab !== 'console',
-          }"
-          class="py-2 px-4 focus:outline-none"
+          :class="{ active: activeResultTab === 'console' }"
+          class="px-4 py-2 rounded tab-btn"
         >
           CONSOLE
         </button>
@@ -161,15 +165,19 @@
         </div>
       </div>
       <div v-if="activeResultTab === 'console'">
-        <p class="font-semibold text-lg">CONSOLE:</p>
-        <textarea
-          v-model="runResult.error"
-          class="w-full min-h-100 border p-2 rounded font-mono text-sm"
-          readonly
-        ></textarea>
+        <div class="p-4 bg-gray-50 rounded-lg">
+          <p class="font-semibold text-lg">CONSOLE:</p>
+          <textarea
+            v-model="runResult.error"
+            class="w-full min-h-100 border p-2 rounded font-mono text-sm"
+            readonly
+          ></textarea>
+        </div>
       </div>
     </div>
   </div>
+  <div ref="bottomEl"></div>
+  <footer class="p-2 text-xl text-gray-800 font-bold text-center"></footer>
 </template>
 
 <script lang="ts">
@@ -181,7 +189,12 @@ export default {
     return {
       activeTab: 'design',
       activeResultTab: 'result',
-      testAutomation: { urls: '', id: null, actionList: { actions: [{id: null, result: ''}] }, generatedCode: '' },
+      testAutomation: {
+        urls: '',
+        id: null,
+        actionList: { actions: [{ id: null, result: '' }] },
+        generatedCode: '',
+      },
       urls: [''],
       loading: false,
       errorMessage: '',
@@ -224,7 +237,7 @@ export default {
       this.errorMessage = ''
       if (!this.urls.every((url) => url.trim() !== '')) {
         this.errorMessage = 'Please ensure all URLs are filled out.'
-        console.log(this.errorMessage);
+        console.log(this.errorMessage)
         return
       }
 
@@ -241,7 +254,7 @@ export default {
       } catch (error) {
         console.error('Error generating automation:', error)
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
     async runAutomation() {
@@ -256,20 +269,23 @@ export default {
           if (action.id != null && this.runResult.hasOwnProperty(action.id)) {
             action.result = this.runResult[action.id]
           } else {
-            action.result = 'FAILED';
+            action.result = 'FAILED'
           }
         })
-
       } catch (error) {
         console.error('Error Running automation:', error)
       } finally {
-        this.loading = false
+        this.loading = false;
+        this.$refs.bottomEl?.scrollIntoView({ behavior: 'smooth' });
       }
     },
   },
 }
 </script>
 
+<style>
+@import './automation.css';
+</style>
 <style scoped>
 /* Ensure the loading overlay covers the entire screen */
 .fixed {

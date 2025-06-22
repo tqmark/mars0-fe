@@ -11,7 +11,7 @@ defineProps<{
 </script>
 
 <template>
-  <header class="flex justify-between items-center bg-white shadow-md">
+  <header class="flex justify-between items-center bg-white">
     <div v-if="isHomePage" class="p-4 text-xl font-bold flex items-center">
       <button @click="toggleNavbar" class="focus:outline-none">
         <i class="icon-toggle text-4xl">

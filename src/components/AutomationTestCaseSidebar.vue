@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/4 bg-white p-4 border-r">
+  <div class="w-1/4 bg-white p-4">
     <button class="flex items-center space-x-2 text-white bg-red-custom px-4 py-2 rounded mb-4">
       <span>New folder</span>
     </button>
