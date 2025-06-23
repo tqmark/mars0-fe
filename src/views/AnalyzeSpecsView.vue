@@ -1,5 +1,7 @@
 <template>
-  <div class="p-6 bg-white rounded-lg shadow-md">
+
+  <Loading v-if="isLoading" />
+  <div v-if="!isLoading" class="p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-xl font-bold mb-4">Key Summary</h2>
     <p class="pb-6 text-gray-600 pt-4">{{ analyzeSpec.keySummary }}</p>
 
@@ -15,7 +17,7 @@
       <thead>
         <tr class="bg-gray-100">
           <th class="p-3 text-left font-light text-gray-600">UI Screen</th>
-          <th class="p-3 text-left font-light text-gray-600">Recommendation</th>
+          <th class="p-3 text-left jjllczfont-light text-gray-600">Recommendation</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +48,12 @@
 </template>
 
 <script lang="ts" setup>
+
+import { ref } from 'vue'
+import Loading from '@/components/Loading.vue'
+
+const isLoading = ref(true);
+
 const analyzeSpec = {
   topicId: 7,
   title: 'Analyze Topic 7',

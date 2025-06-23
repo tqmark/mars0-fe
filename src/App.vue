@@ -19,7 +19,7 @@ const isHomePage = computed(() => {
   <div class="flex">
     <LNB v-if="!isHomePage" />
     <div class="flex-1">
-      <Header is-home-page :userName :userRole/>
+      <Header :isHomePage :userName :userRole/>
       <RouterView />
     </div>
   </div>
