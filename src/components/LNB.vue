@@ -58,7 +58,7 @@ const isDemo = computed(() => {
         <li>
           <div
             @click="toggleSection('inventory')"
-            class="p-4 bg-[rgba(255,255,255,0.5)] hover:bg-red-600 cursor-pointer flex items-center justify-between"
+            class="p-4 bg-[rgba(255,255,255,0.13)] hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
             <div class="flex">
               <img :src="inventoryIcon" alt="Card Image" class="pr-4" />

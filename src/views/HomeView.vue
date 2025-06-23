@@ -13,7 +13,7 @@ import comingSoon from '@/assets/coming-soon.svg';
 <template>
     <div class="mx-auto">
       <Hero />
-      <div class="flex justify-center gap-8 p-8">
+      <div class="flex justify-center gap-8 p-8 pt-12">
         <Card :image="case1" title="CASE" description="Start by reviewing requirement to detects ambiguities, inconsistencies then make document clear and complete.  " />
         <Card :image="tars" title="TARS" description="Generates detailed test cases that cover many scenarios, from typical user interactions to overlooked edge cases. " />
         <Card :image="kipp" title="KIPP" description="Convert manual test cases into fully functional automation test scripts. Accelerates continuous testing and feedback." />

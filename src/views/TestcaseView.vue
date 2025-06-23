@@ -9,7 +9,7 @@ const { id } = toRefs(route.params);
 
 <template>
   <div class="p-6 bg-white rounded-lg shadow-md">
-    <div class="mb-4">
+    <div class="pb-5 border-b-1 border-b-gray-300">
       <h2 class="text-lg font-bold">SUMMARY {{id}}</h2>
       <p>Validate that users can log in successfully with correct credentials and receive appropriate error messages with incorrect credentials</p>
     </div>
@@ -45,14 +45,14 @@ const { id } = toRefs(route.params);
       </div>
     </div>
 
-    <div class="mb-4">
+    <div class="pb-5 border-b-1 border-b-gray-300">
       <h3 class="font-bold">PRE-CONDITION</h3>
       <p>Available Admin account</p>
     </div>
 
     <div class="mt-10">
       <h3 class="font-bold my-4">STEPS</h3>
-      <table class="min-w-full border-separate border-spacing-y-2.5 bg-white">
+      <table class="min-w-full bg-white">
         <thead class="bg-red-500 text-white">
         <tr class="bg-red-custom text-white">
           <th class="rounded-s-lg w-1/2 p-2 text-left">STEP</th>
@@ -61,16 +61,16 @@ const { id } = toRefs(route.params);
         </thead>
         <tbody>
         <tr class="bg-gray-100">
-          <td class="p-2">1. When user opens Browser And navigates to system URL</td>
-          <td class="p-2">Then Login screen is displayed</td>
+          <td class="p-4">1. When user opens Browser And navigates to system URL</td>
+          <td class="p-4">Then Login screen is displayed</td>
         </tr>
         <tr>
-          <td class="p-2">2. When user input valid data on all fields</td>
-          <td class="p-2">Then all fields are displayed data</td>
+          <td class="p-4">2. When user input valid data on all fields</td>
+          <td class="p-4">Then all fields are displayed data</td>
         </tr>
         <tr class="bg-gray-100">
-          <td class="p-2">3. When user clicks Login button</td>
-          <td class="p-2">Then Homepage is displayed</td>
+          <td class="p-4">3. When user clicks Login button</td>
+          <td class="p-4">Then Homepage is displayed</td>
         </tr>
         </tbody>
       </table>
