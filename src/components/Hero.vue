@@ -3,22 +3,37 @@ import { ref } from 'vue'
 import LeftIcon from '@/components/icon/LeftIcon.vue'
 import RightIcon from '@/components/icon/RightIcon.vue'
 import { useRouter } from 'vue-router'
-
+import axios from 'axios'
 
 const router = useRouter()
-const url = ref('');
+const url = ref('')
 
-const navigateToSpec = () => {
-  router.push({ name: 'analyze-specs' })
+const navigateToSpec = (specsId: string) => {
+  router.push({ name: 'analyze-specs', params: { id: specsId } })
 }
 
 const navigateToTestCase = () => {
   router.push({ name: 'analyze-testcases' })
 }
 
-const handleGenerateSpec = () => {
-  // Logic to handle spec generation
-  navigateToSpec()
+const handleGenerateSpec = async () => {
+  if (!url.value) {
+    return
+  }
+
+  try {
+    const response = await axios.post(
+      `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/specs/review`,
+      { wiki_url: url.value },
+    )
+    const { success, specs_id: specsId } = response.data || { success: false }
+    if (success) {
+      // Logic to handle spec generation
+      navigateToSpec(specsId)
+    }
+  } catch (error) {
+    console.error('Error fetching specs review data:', error)
+  }
 }
 const handleGenerateTestCase = () => {
   // Logic to handle test case generation
