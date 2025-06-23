@@ -12,7 +12,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/analyze-specs',
+      path: '/analyze-specs/:id',
       name: 'analyze-specs',
       component: () => import('../views/AnalyzeSpecsView.vue'),
     },
