@@ -14,7 +14,7 @@ const { id } = toRefs(route.params);
       <p>Validate that users can log in successfully with correct credentials and receive appropriate error messages with incorrect credentials</p>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mb-4">
+    <div class="grid grid-cols-4 gap-12 my-10">
       <div class ="border-b-1 border-b-gray-300">
         <h3 class="font-semibold">TYPE</h3>
         <p>Automated</p>
@@ -50,9 +50,9 @@ const { id } = toRefs(route.params);
       <p>Available Admin account</p>
     </div>
 
-    <div>
-      <h3 class="font-bold mb-2">STEPS</h3>
-      <table class="min-w-full bg-white">
+    <div class="mt-10">
+      <h3 class="font-bold my-4">STEPS</h3>
+      <table class="min-w-full border-separate border-spacing-y-2.5 bg-white">
         <thead class="bg-red-500 text-white">
         <tr class="bg-red-custom text-white">
           <th class="rounded-s-lg w-1/2 p-2 text-left">STEP</th>
