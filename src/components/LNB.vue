@@ -81,14 +81,17 @@ const isDemo = computed(() => {
           </div>
           <ul v-if="expandedSection === 'inventory' && !isCollapsed" class="pl-8">
             <li
-              class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer"
-              :class="{ 'bg-red-600 rounded-xl': isAnalyzeSpec }"
+              class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer border-l-2 border-l-[rgba(255,255,255,0.13)]"
+              :class="{ 'bg-red-600 rounded-xl': isAnalyzeSpec,
+                'border-l-white': isAnalyzeSpec,
+            }"
+
             >
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Manual test case</li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Automation test case</li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Element Locator</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Manual test case</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Automation test case</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Element Locator</li>
           </ul>
         </li>
         <li>
@@ -114,13 +117,16 @@ const isDemo = computed(() => {
             />
           </div>
           <ul v-if="expandedSection === 'analyze' && !isCollapsed" class="pl-8">
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]"
+            :class="{ 'bg-red-600 ': isAnalyzeTestCase,
+                'border-l-white': isAnalyzeTestCase}"
+               >
               <RouterLink to="/analyze-testcases">Generate test case</RouterLink>
             </li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">Element detector</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Element detector</li>
           </ul>
         </li>
         <li class="p-4 hover:bg-red-600 cursor-pointer flex items-center">
