@@ -137,7 +137,7 @@ const isDemo = computed(() => {
           <RouterLink to="/confirmation" v-if="!isCollapsed">confirmation</RouterLink>
         </div>
       </div>
-      <div class="absolute bottom-0 left-0 py-15 border-t-1 border-t-gray-300 w-64">
+      <div class="absolute bottom-0 left-0 py-10 border-t-1 border-t-gray-300 w-64">
         <ul>
         <li
           @click="toggleSection('dashboard')"
