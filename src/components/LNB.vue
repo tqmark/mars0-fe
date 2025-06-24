@@ -6,6 +6,8 @@ import dashboardIcon from '@/assets/dashboard.svg'
 import inventoryIcon from '@/assets/inventory.svg'
 import analyzeIcon from '@/assets/analyze.svg'
 import arrowDownIcon from '@/assets/arrowDown.svg'
+import settingIcon from '@/assets/setting.svg'
+import helpIcon from '@/assets/help.svg'
 const expandedSection = ref(null)
 const isCollapsed = ref(false)
 const route = useRoute()
@@ -62,8 +64,8 @@ const isDemo = computed(() => {
           >
             <div class="flex">
               <img :src="inventoryIcon" alt="Card Image" class="pr-4" />
-              <span >Inventory</span>
-          </div>
+              <span>Inventory</span>
+            </div>
             <img
               v-if="expandedSection === 'inventory' && !isCollapsed"
               :src="arrowDownIcon"
@@ -78,8 +80,9 @@ const isDemo = computed(() => {
             />
           </div>
           <ul v-if="expandedSection === 'inventory' && !isCollapsed" class="pl-8">
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer"
-              :class="{'bg-red-600 rounded-xl': isAnalyzeSpec }"
+            <li
+              class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer"
+              :class="{ 'bg-red-600 rounded-xl': isAnalyzeSpec }"
             >
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
@@ -94,7 +97,9 @@ const isDemo = computed(() => {
             class="p-4 hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
             <div class="flex">
-              <img :src="analyzeIcon" alt="Card Image" class="pr-4" /> <span v-if="!isCollapsed">Analyze</span></div>
+              <img :src="analyzeIcon" alt="Card Image" class="pr-4" />
+              <span v-if="!isCollapsed">Analyze</span>
+            </div>
             <img
               v-if="expandedSection === 'analyze' && !isCollapsed"
               :src="arrowDownIcon"
@@ -107,7 +112,6 @@ const isDemo = computed(() => {
               alt="Arrow Icon"
               class="rotate-180 pl-4"
             />
-
           </div>
           <ul v-if="expandedSection === 'analyze' && !isCollapsed" class="pl-8">
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer">
@@ -132,6 +136,24 @@ const isDemo = computed(() => {
           <i class="icon-help mr-2"></i>
           <RouterLink to="/confirmation" v-if="!isCollapsed">confirmation</RouterLink>
         </div>
+      </div>
+      <div class="absolute bottom-0 left-0 py-15 border-t-1 border-t-gray-300 w-64">
+        <ul>
+        <li
+          @click="toggleSection('dashboard')"
+          class="p-4 hover:bg-red-600 cursor-pointer flex items-center"
+        >
+          <img :src="settingIcon" alt="Card Image" class="pr-4 w-[45px]" />
+          <span>Setting</span>
+        </li>
+        <li
+          @click="toggleSection('dashboard')"
+          class="p-4 hover:bg-red-600 cursor-pointer flex items-center"
+        >
+          <img :src="helpIcon" alt="Card Image" class="pr-4 w-[45px]" />
+          <span>help</span>
+        </li>
+        </ul>
       </div>
     </div>
   </div>
