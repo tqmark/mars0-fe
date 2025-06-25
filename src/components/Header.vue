@@ -23,7 +23,7 @@ defineProps<{
       </button>
       <RouterLink to="/" class="font-extrabold pl-2 [color:#DD4444]">MARS</RouterLink>
     </div>
-    <div class="flex items-center gap-2.5">
+    <div class="flex items-center gap-2.5 pr-5 pt-3">
       <SearchIcon/>
       <BellIcon/>
       <img class="w-10 h-10 rounded-full mr-4" src="@/assets/coming-soon.svg" alt="User Avatar" />
