@@ -37,45 +37,45 @@ const navigateBack = () => {
         </button>
       </div>
     </div>
-    <div class="pb-5 border-b-1 border-b-gray-300">
-      <h2 class="text-lg font-bold">SUMMARY {{id}}</h2>
-      <p>Validate that users can log in successfully with correct credentials and receive appropriate error messages with incorrect credentials</p>
+    <div class="py-8 border-b-1 border-b-gray-300">
+      <h2 class="text-lg text-header font-bold">SUMMARY {{id}}</h2>
+      <p class="sub-text">Validate that users can log in successfully with correct credentials and receive appropriate error messages with incorrect credentials</p>
     </div>
 
-    <div class="grid grid-cols-4 gap-12 my-10">
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">TYPE</h3>
-        <p>Automated</p>
+    <div class="grid grid-cols-4 gap-12 my-8">
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">TYPE</h3>
+        <p class="sub-text">Automated</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">PRIORITY</h3>
-        <p>5 - Must Test</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">PRIORITY</h3>
+        <p class="sub-text">5 - Must Test</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">ESTIMATE</h3>
-        <p>None</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">ESTIMATE</h3>
+        <p class="sub-text">None</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">MILESTONE</h3>
-        <p>None</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">MILESTONE</h3>
+        <p class="sub-text">None</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">REFERENCES</h3>
-        <p>MP-1790</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">REFERENCES</h3>
+        <p class="sub-text">MP-1790</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">TAGS</h3>
-        <p>1.3</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">TAGS</h3>
+        <p class="sub-text">1.3</p>
       </div>
-      <div class ="border-b-1 border-b-gray-300">
-        <h3 class="font-semibold">AUTOMATION TYPE</h3>
-        <p>None</p>
+      <div class ="border-b-1 border-b-gray-300 py-10">
+        <h3 class="font-semibold text-header">AUTOMATION TYPE</h3>
+        <p class="sub-text">None</p>
       </div>
     </div>
 
-    <div class="pb-5 border-b-1 border-b-gray-300">
+    <div class="pb-5 border-b-1 border-b-gray-300 py-10">
       <h3 class="font-bold">PRE-CONDITION</h3>
-      <p>Available Admin account</p>
+      <p class="sub-text">Available Admin account</p>
     </div>
 
     <div class="mt-10">

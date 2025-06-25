@@ -4,7 +4,8 @@ import LeftIcon from '@/components/icon/LeftIcon.vue'
 import RightIcon from '@/components/icon/RightIcon.vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-
+import helpIcon from '@/assets/help.svg'
+import youtubeIcon from '@/assets/youtube.svg'
 const router = useRouter()
 const url = ref('')
 
@@ -43,7 +44,7 @@ const handleGenerateTestCase = () => {
 </script>
 <template>
   <section
-    class="bg-cover bg-center p-8 flex justify-center items-center h-[540px]"
+    class="bg-cover relative bg-center p-8 flex justify-center items-center h-[540px]"
     style="background-image: url('/mars0-fe/banner.png')"
   >
     <div class="relative w-[42%]">
@@ -88,5 +89,7 @@ const handleGenerateTestCase = () => {
         </div>
       </div>
     </div>
+    <img :src="youtubeIcon" alt="Card Image" class="absolute bottom-8 left-25" />
+
   </section>
 </template>

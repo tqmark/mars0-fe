@@ -19,7 +19,11 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --color-text-header: #171725;
+  --color-sub-text: #696974;
 }
+
+
 
 /* semantic color variables for this project */
 :root {
@@ -64,6 +68,7 @@
 color-red-custom {
   color: #DD4444;
 }
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -71,11 +76,21 @@ body {
 button {
   border-radius: 0.7rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-    text-decoration: none;
-    display: inline-block;
-  }
+  text-decoration: none;
+  display: inline-block;
+}
 
-  button:hover {
-    background-color: #BB3333; /* Slightly darker shade */
-    border-color: #AA2222;
-  }
+button:hover {
+  background-color: #BB3333; /* Slightly darker shade */
+  border-color: #AA2222;
+}
+
+.text-header {
+  color: var(--color-text-header);
+}
+
+.sub-text {
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-sub-text);
+  fonbt-size: 14px;
+}

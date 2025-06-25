@@ -8,6 +8,9 @@ import analyzeIcon from '@/assets/analyze.svg'
 import arrowDownIcon from '@/assets/arrowDown.svg'
 import settingIcon from '@/assets/setting.svg'
 import helpIcon from '@/assets/help.svg'
+import reportIcon from '@/assets/report.svg'
+
+
 const expandedSection = ref(null)
 const isCollapsed = ref(false)
 const route = useRoute()
@@ -52,7 +55,7 @@ const isDemo = computed(() => {
       <ul>
         <li
           @click="toggleSection('dashboard')"
-          class="p-4 hover:bg-red-600 cursor-pointer flex items-center"
+          class="p-4 pl-7 hover:bg-red-600 cursor-pointer flex items-center"
         >
           <img :src="dashboardIcon" alt="Card Image" class="pr-4" />
           <span v-if="!isCollapsed">Dashboard</span>
@@ -60,7 +63,7 @@ const isDemo = computed(() => {
         <li>
           <div
             @click="toggleSection('inventory')"
-            class="p-4 bg-[rgba(255,255,255,0.13)] hover:bg-red-600 cursor-pointer flex items-center justify-between"
+            class="p-4 pl-7 bg-[rgba(255,255,255,0.13)] hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
             <div class="flex">
               <img :src="inventoryIcon" alt="Card Image" class="pr-4" />
@@ -82,7 +85,7 @@ const isDemo = computed(() => {
           <ul v-if="expandedSection === 'inventory' && !isCollapsed" class="pl-8">
             <li
               class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer border-l-2 border-l-[rgba(255,255,255,0.13)]"
-              :class="{ 'bg-red-600 rounded-xl': isAnalyzeSpec,
+              :class="{ 'bg-red-600': isAnalyzeSpec,
                 'border-l-white': isAnalyzeSpec,
             }"
 
@@ -97,7 +100,7 @@ const isDemo = computed(() => {
         <li>
           <div
             @click="toggleSection('analyze')"
-            class="p-4 hover:bg-red-600 cursor-pointer flex items-center justify-between"
+            class="p-4 pl-7 hover:bg-red-600 cursor-pointer flex items-center justify-between"
           >
             <div class="flex">
               <img :src="analyzeIcon" alt="Card Image" class="pr-4" />
@@ -129,20 +132,11 @@ const isDemo = computed(() => {
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Element detector</li>
           </ul>
         </li>
-        <li class="p-4 hover:bg-red-600 cursor-pointer flex items-center">
-          <i class="icon-reports mr-2"></i> <span v-if="!isCollapsed">Reports</span>
+        <li class="p-4 pl-7 hover:bg-red-600 cursor-pointer flex items-center">
+          <img :src="reportIcon" alt="Card Image" class="pr-4" />
+          <span v-if="!isCollapsed">Reports</span>
         </li>
       </ul>
-      <div class="mt-auto p-4">
-        <div class="py-2 hover:bg-red-600 cursor-pointer flex items-center">
-          <i class="icon-help mr-2"></i>
-          <RouterLink to="/demo" v-if="!isCollapsed">Demo</RouterLink>
-        </div>
-        <div class="py-2 hover:bg-red-600 cursor-pointer flex items-center">
-          <i class="icon-help mr-2"></i>
-          <RouterLink to="/confirmation" v-if="!isCollapsed">confirmation</RouterLink>
-        </div>
-      </div>
       <div class="absolute bottom-0 left-0 py-10 border-t-1 border-t-gray-300 w-64">
         <ul>
         <li

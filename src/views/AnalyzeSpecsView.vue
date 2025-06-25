@@ -114,7 +114,7 @@ export default {
           },
         ],
       },
-      loading: false,
+      loading: true,
     }
   },
   mounted() {
@@ -132,7 +132,7 @@ export default {
       } catch (error) {
         console.error('Error fetching automation data:', error)
       } finally {
-        this.loading = false
+        this.loading = true
       }
     },
   },
