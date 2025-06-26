@@ -16,7 +16,7 @@
       </div>
     </div>
     <h2 class="font-bold text-header my-4">Key Summary</h2>
-    <p class="pb-6 sub-text ">{{ analyzeSpec.keySummary }}</p>
+    <p class="pb-6 sub-text">{{ analyzeSpec.keySummary }}</p>
 
     <hr class="border-black border-t-1 pb-6" />
 
@@ -34,56 +34,63 @@
         </tr>
       </thead>
       <tbody>
-      <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
-        <td class="p-3">
-          <div class="justify-self-center">
-            <img src="/banner.png" alt="UI Screen" class="w-64 h-64 object-cover rounded-lg" />
-          </div>
-        </td>
-        <td class="p-3 flex flex-col">
-          <div
-            class="flex w-full items-center justify-between mb-4 font-bold pb-4 pt-4 pl-4 bg-gray-100 rounded-md"
-          >
-            <h2 v-if="review.category !== 'ui_ux'">
-              {{
-                review.category
-                  .split('_')
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(' ')
-              }}
-            </h2>
-            <h2 v-else>UI/UX</h2>
+        <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
+          <td class="p-3">
+            <div class="justify-self-center">
+              <img
+                :src="review.screenImage"
+                :alt="review.screen"
+                class="w-64 h-64 object-cover rounded-lg"
+              />
+            </div>
+            <div class="justify-self-center pt-6 text-lg">
+              {{ review.screen.toUpperCase() }}
+            </div>
+          </td>
+          <td class="p-3 flex flex-col">
+            <div
+              class="flex w-full items-center justify-between mb-4 font-bold pb-4 pt-4 pl-4 bg-gray-100 rounded-md"
+            >
+              <h2 v-if="review.category !== 'ui_ux'">
+                {{
+                  review.category
+                    .split('_')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                }}
+              </h2>
+              <h2 v-else>UI/UX</h2>
 
-            <img
-              :src="arrowDownRedIcon"
-              @click="toggleCollapse(index)"
-              :alt="review.collapsed ? 'Expand' : 'Collapse'"
-              :class="review.collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
-            />
-          </div>
-          <div
-            v-for="(recommendation, rIndex) in review.recommendations"
-            :key="rIndex"
-            class="mb-4"
-          >
-            <h4 class="font-semibold text-header pb-4">{{ recommendation.title }}</h4>
-            <ul class="list-disc list-inside pl-6 pb-6 font-light sub-text">
-              <template v-for="(detail, dIndex) in recommendation.details" :key="dIndex">
-                <li v-if="!review.collapsed || dIndex < 2">
-                  {{ detail }}
-                </li>
-              </template>
-            </ul>
-          </div>
-        </td>
-      </tr>
+              <img
+                :src="arrowDownRedIcon"
+                @click="toggleCollapse(index)"
+                :alt="review.collapsed ? 'Expand' : 'Collapse'"
+                :class="review.collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
+              />
+            </div>
+            <div
+              v-for="(recommendation, rIndex) in review.recommendations"
+              :key="rIndex"
+              class="mb-4"
+            >
+              <h4 class="font-semibold text-header pb-4">{{ recommendation.title }}</h4>
+              <ul class="list-disc list-inside pl-6 pb-6 font-light sub-text">
+                <template v-for="(detail, dIndex) in recommendation.details" :key="dIndex">
+                  <li v-if="!review.collapsed || dIndex < 2">
+                    {{ detail }}
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import Loading from '@/components/Loading.vue'
@@ -92,6 +99,7 @@ import arrowDownRedIcon from '@/assets/icondown-red.svg'
 // Define the structure of analyzeSpec
 interface Review {
   screen: string
+  screenImage: string
   category: string
   recommendations: Array<{
     title: string
@@ -125,7 +133,8 @@ const analyzeSpec = ref<AnalyzeSpec>({
   ],
   reviews: [
     {
-      screen: 'image1.png',
+      screen: 'Login',
+      screenImage: 'image1.png',
       category: 'data',
       recommendations: [
         {
@@ -157,26 +166,38 @@ const toggleCollapse = (index: number) => {
   analyzeSpec.value.reviews[index].collapsed = !analyzeSpec.value.reviews[index].collapsed
 }
 
+let intervalId: number
 onMounted(async () => {
   await fetchSpecsData()
+  if (loading.value) {
+    intervalId = setInterval(fetchSpecsData, 3000)
+  }
+})
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
 })
 
 async function fetchSpecsData() {
-  loading.value = true
   try {
     const response = await axios.get(
       `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/specs/${route.params.id}`,
     )
     console.log('Response data:', response.data)
-    analyzeSpec.value = response.data
-    // Initialize the collapsed state for each review
-    analyzeSpec.value.reviews.forEach(review => {
-      review.collapsed = false
-    })
+    if (response.data.reviews.length > 0) {
+      analyzeSpec.value = response.data
+      // Initialize the collapsed state for each review
+      analyzeSpec.value.reviews.forEach((review) => {
+        review.collapsed = false
+      })
+
+      loading.value = false
+      clearInterval(intervalId)
+    }
   } catch (error) {
     console.error('Error fetching automation data:', error)
-  } finally {
-    loading.value = false
   }
 }
 
