@@ -26,7 +26,7 @@ defineProps<{
     <div class="flex items-center gap-4 pr-5 pt-3">
       <SearchIcon/>
       <BellIcon/>
-      
+
       <img class="w-10 h-10 rounded-full" src="@/assets/coming-soon.svg" alt="User Avatar" />
       <div class="flex flex-col">
         <div class="font-medium text-gray-900">{{ userName }}</div>
