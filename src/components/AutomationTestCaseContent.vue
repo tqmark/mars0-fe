@@ -5,7 +5,7 @@
       v-if="loading"
       class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50"
     >
-      <img src="@/assets/cua4_loading.gif" alt="Loading" class="max-w-1/2" />
+      <img src="@/assets/cua4_loading.gif" alt="Loading" class="max-w-1/4" />
     </div>
 
     <div class="flex justify-between items-center mb-4">
@@ -282,6 +282,7 @@ export default {
           `http://localhost:8080/api/automation/${this.testAutomation.id}/run`,
         )
         this.runResult = response.data
+        console.log(this.runResult)
 
         this.testAutomation.actionList.actions.forEach((action) => {
           if (action.id != null && this.runResult.hasOwnProperty(action.id)) {
