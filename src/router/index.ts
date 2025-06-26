@@ -42,6 +42,12 @@ const router = createRouter({
       name: 'auto-testcase',
       component: AutomationTestcaseView,
       props: true
+    },
+    {
+      path:'/report',
+      name: 'report',
+      component: () => import('../views/ReportView.vue'),
+      props: true
     }
   ],
 })

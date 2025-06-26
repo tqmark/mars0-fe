@@ -134,7 +134,8 @@ const isDemo = computed(() => {
         </li>
         <li class="p-4 pl-7 hover:bg-red-600 cursor-pointer flex items-center">
           <img :src="reportIcon" alt="Card Image" class="pr-4" />
-          <span v-if="!isCollapsed">Reports</span>
+          <RouterLink v-if="!isCollapsed" to="/report">Reports</RouterLink>
+
         </li>
       </ul>
       <div class="absolute bottom-0 left-0 py-10 border-t-1 border-t-gray-300 w-64">

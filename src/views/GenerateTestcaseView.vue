@@ -1,7 +1,8 @@
 <template>
   <Loading v-if="loading" />
   <div v-if="!loading" class="p-4 space-y-4">
-    <div class="flex space-x-4 gap-2.5">
+    <div class="flex space-x-4j justify-between gap-2.5">
+      <div class="flex space-x-2">
       <button
         v-for="(suite, index) in testCase.testSuites"
         :key="index"
@@ -14,6 +15,17 @@
       >
         {{ suite.category }}
       </button>
+      </div>
+    <div class="flex space-x-2">
+      <button class="btn-secondary border px-4 py-2 rounded">
+        <font-awesome-icon :icon="['fas', 'print']" />
+        Export
+      </button>
+      <button @click="showPopup = true" class="btn-secondary border px-4 py-2 rounded">
+        View History
+      </button>
+      <HistoryPopup v-if="showPopup" @close="showPopup = false" />
+      </div>
     </div>
 
     <div
@@ -62,12 +74,15 @@ const route = useRoute()
 const router = useRouter()
 import eyeIcon from '@/assets/eye.svg'
 import arrowDownRedIcon from '@/assets/icondown-red.svg'
+import HistoryPopup from '@/components/HistoryPopup.vue'
 const selectedCategory = ref('Functional')
 
 const selectedFeatures = computed(() => {
   const suite = testCase.value.testSuites.find((suite) => suite.category === selectedCategory.value)
   return suite ? suite.features : []
 })
+
+const showPopup = ref(false)
 
 const priorityClass = (priority: string) => {
   switch (priority) {
