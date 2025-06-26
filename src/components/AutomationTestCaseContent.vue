@@ -130,11 +130,6 @@
         <pre><code class="language-java" v-html="generatedCode"></code></pre>
         -->
         <CodeBlock :code="testAutomation.generatedCode" language="java" />
-        <textarea
-          v-model="testAutomation.generatedCode"
-          class="w-full min-h-200 border p-2 rounded font-mono text-sm"
-          readonly
-        ></textarea>
       </div>
     </div>
 

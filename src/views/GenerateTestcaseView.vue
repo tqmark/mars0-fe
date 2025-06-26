@@ -7,7 +7,7 @@
         :key="index"
         class="px-4 py-2 rounded-md"
         :class="{
-          'bg-[#] text-white': selectedCategory === suite.category,
+          'bg-red-custom text-white': selectedCategory === suite.category,
           'bg-gray-200': selectedCategory !== suite.category,
         }"
         @click="selectedCategory = suite.category"
@@ -23,20 +23,22 @@
     >
       <div class="h-[50px] flex items-center justify-between mb-2 bg-[#fff2f2] pl-2 pr-2">
         <div class="flex">
-          <input type="checkbox" class="mr-2" />
-          <h3 class="font-bold">{{ feature.name }}</h3>
+          <h3 class="font-semibold text-header">{{ feature.name }}</h3>
         </div>
-        <button class="text-blue-500">View UI Screen</button>
+        <div class="flex gap-2">
+          <img :src="eyeIcon" alt="eye-icon" />
+          <button class="color-red-custom">View UI Screen</button>
+          <img :src="arrowDownRedIcon" />
+        </div>
       </div>
-      <ul class="pl-2 pr-2">
+      <ul class="pl-2 pr-2 pt-2">
         <li
           v-for="testCase in feature.testCases"
           :key="testCase.testCaseId"
-          class="flex justify-between items-center mb-1"
           @click="navigateToTestCaseDetail(testCase.testCaseId)"
+          class="flex justify-between items-center my-4"
         >
           <div class="flex items-center">
-            <input type="checkbox" class="mr-2" />
             <span>{{ testCase.description }}</span>
           </div>
           <span :class="priorityClass(testCase.priority)">
@@ -56,6 +58,8 @@ import Loading from '@/components/Loading.vue'
 
 const route = useRoute()
 const router = useRouter()
+import eyeIcon from '@/assets/eye.svg'
+import arrowDownRedIcon from '@/assets/icondown-red.svg'
 const selectedCategory = ref('Functional')
 
 const selectedFeatures = computed(() => {
