@@ -47,12 +47,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 
 const selectedCategory = ref('Functional')
 
 const selectedFeatures = computed(() => {
-  const suite = testCase.testSuites.find((suite) => suite.category === selectedCategory.value)
+  const suite = testCase.value.testSuites.find((suite) => suite.category === selectedCategory.value)
   return suite ? suite.features : []
 })
 
@@ -69,7 +71,7 @@ const priorityClass = (priority: string) => {
   }
 }
 
-const testCase = {
+const testCase = ref({
   title: 'login_feature.docx',
   testSuites: [
     {
@@ -115,7 +117,19 @@ const testCase = {
       features: [],
     },
   ],
-}
+})
+
+onMounted(async () => {
+  try {
+    const route = useRoute()
+    const response = await axios.get(
+      `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/test-suites/manual/${route.params.id}`,
+    )
+    testCase.value = response.data
+  } catch (error) {
+    console.error('Error fetching automation data:', error)
+  }
+})
 </script>
 
 <style scoped></style>
