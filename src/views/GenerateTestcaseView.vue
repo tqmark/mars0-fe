@@ -41,9 +41,11 @@
           <div class="flex items-center">
             <span>{{ testCase.description }}</span>
           </div>
-          <span :class="priorityClass(testCase.priority)">
+          <div class="p-2 rounded-md" :class="priorityClass(testCase.priority)">
+          <span>
             {{ testCase.priority }}
           </span>
+          </div>
         </li>
       </ul>
     </div>
@@ -70,13 +72,13 @@ const selectedFeatures = computed(() => {
 const priorityClass = (priority: string) => {
   switch (priority) {
     case 'High':
-      return 'text-red-500'
+      return 'text-red-500 bg-red-100'
     case 'Medium':
-      return 'text-yellow-500'
+      return 'text-yellow-500 bg-yellow-100'
     case 'Low':
-      return 'text-green-500'
+      return 'text-green-500 bg-green-100'
     default:
-      return 'text-gray-500'
+      return 'text-gray-500 bg-gray-100'
   }
 }
 
