@@ -36,14 +36,22 @@
       <tbody>
         <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
           <td class="p-3">
-            <div class="justify-self-center">
+            <div class="justify-self-center cursor-pointer">
               <img
                 :src="review.screenImage"
                 :alt="review.screen"
                 class="w-64 h-64 object-cover rounded-lg"
+                @click="openModal(review.screenImage)"
               />
             </div>
-            <div class="justify-self-center pt-6 text-lg">
+            <div
+              v-if="modalOpen"
+              class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+              @click="closeModal"
+            >
+              <img :src="currentImage" alt="FullSize Image" class="object-cover rounded-lg" />
+            </div>
+            <div class="justify-self-center pt-6 tmodalext-lg">
               {{ review.screen.toUpperCase() }}
             </div>
           </td>
@@ -203,5 +211,18 @@ async function fetchSpecsData() {
 
 function generateTC() {
   console.log('Generating test case for ID:', analyzeSpec.value.topicId)
+}
+
+const currentImage = ref('/mars0-fe/banner.png')
+const modalOpen = ref(false)
+
+function openModal(imageUrl: string) {
+  currentImage.value = imageUrl
+  modalOpen.value = true
+}
+
+function closeModal() {
+  currentImage.value = ''
+  modalOpen.value = false
 }
 </script>

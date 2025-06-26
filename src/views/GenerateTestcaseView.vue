@@ -48,7 +48,7 @@
           v-for="testCase in feature.testCases"
           :key="testCase.testCaseId"
           @click="navigateToTestCaseDetail(testCase.testCaseId)"
-          class="flex justify-between items-center my-4"
+          class="flex justify-between items-center my-4 cursor-pointer"
         >
           <div class="flex items-center">
             <span>{{ testCase.description }}</span>
@@ -164,9 +164,3 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
   router.push({ name: 'testcase', params: { id: testCaseId } })
 }
 </script>
-
-<style scoped>
-li {
-  cursor: pointer;
-}
-</style>
