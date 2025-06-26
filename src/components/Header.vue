@@ -23,10 +23,11 @@ defineProps<{
       </button>
       <RouterLink to="/" class="font-extrabold pl-2 [color:#DD4444]">MARS</RouterLink>
     </div>
-    <div class="flex items-center gap-2.5 pr-5 pt-3">
+    <div class="flex items-center gap-4 pr-5 pt-3">
       <SearchIcon/>
       <BellIcon/>
-      <img class="w-10 h-10 rounded-full mr-4" src="@/assets/coming-soon.svg" alt="User Avatar" />
+      
+      <img class="w-10 h-10 rounded-full" src="@/assets/coming-soon.svg" alt="User Avatar" />
       <div class="flex flex-col">
         <div class="font-medium text-gray-900">{{ userName }}</div>
         <div class="text-sm text-gray-500">{{ userRole }}</div>
