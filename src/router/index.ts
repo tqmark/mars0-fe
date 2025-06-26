@@ -17,7 +17,7 @@ const router = createRouter({
       component: () => import('../views/AnalyzeSpecsView.vue'),
     },
     {
-      path: '/analyze-testcases',
+      path: '/generate-testcases/:id',
       name: 'generate-testcases',
       component: () => import('../views/GenerateTestcaseView.vue'),
     },

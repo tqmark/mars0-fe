@@ -27,7 +27,7 @@ const isAnalyzeSpec = computed(() => {
 })
 
 const isAnalyzeTestCase = computed(() => {
-  return route.path === '/analyze-testcases'
+  return route.path === '/generate-testcases'
 })
 const isDemo = computed(() => {
   return route.path === '/demo'
@@ -127,7 +127,7 @@ const isDemo = computed(() => {
             :class="{ 'bg-red-600 ': isAnalyzeTestCase,
                 'border-l-white': isAnalyzeTestCase}"
                >
-              <RouterLink to="/analyze-testcases">Generate test case</RouterLink>
+              <RouterLink to="/generate-testcases">Generate test case</RouterLink>
             </li>
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Element detector</li>
           </ul>

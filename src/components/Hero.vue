@@ -13,8 +13,8 @@ const navigateToSpec = (specsId: string) => {
   router.push({ name: 'analyze-specs', params: { id: specsId } })
 }
 
-const navigateToTestCase = () => {
-  router.push({ name: 'analyze-testcases' })
+const navigateToTestCase = (testSuiteId: string) => {
+  router.push({ name: 'generate-testcases', params: { id: testSuiteId } })
 }
 
 const handleGenerateSpec = async () => {
@@ -36,9 +36,24 @@ const handleGenerateSpec = async () => {
     console.error('Error fetching specs review data:', error)
   }
 }
-const handleGenerateTestCase = () => {
-  // Logic to handle test case generation
-  navigateToTestCase()
+const handleGenerateTestCase = async () => {
+  if (!url.value) {
+    return
+  }
+
+  try {
+    const response = await axios.post(
+      `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/test-suites/manual/generate`,
+      { wiki_url: url.value },
+    )
+    const { success, test_suite_id: testSuiteId } = response.data || { success: false }
+    if (success) {
+      // Logic to handle test case generation
+      navigateToTestCase(testSuiteId)
+    }
+  } catch (error) {
+    console.error('Error fetching specs review data:', error)
+  }
 }
 
 </script>
