@@ -59,6 +59,7 @@
     "oxlint": "^0.16.0",
     "postcss": "^8.5.4",
     "prettier": "3.5.3",
+    "prismjs": "^1.30.0",
     "sass-embedded": "^1.89.2",
     "tailwindcss": "^4.1.10",
     "typescript": "~5.8.0",

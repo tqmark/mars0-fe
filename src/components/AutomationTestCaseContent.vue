@@ -30,15 +30,20 @@
         </button>
       </div>
       <div class="flex space-x-2">
-        <button class="btn-secondary border px-4 py-2 rounded"><font-awesome-icon :icon="['fas', 'pen']" /> Edit</button>
+        <button class="btn-secondary border px-4 py-2 rounded">
+          <font-awesome-icon :icon="['fas', 'pen']" />
+          Edit
+        </button>
         <button
           @click="generateAutomation()"
           class="btn bg-red-custom text-white border px-4 py-2 rounded"
         >
-          <font-awesome-icon :icon="['fas', 'rocket']" /> Generate Automation
+          <font-awesome-icon :icon="['fas', 'rocket']" />
+          Generate Automation
         </button>
         <button @click="runAutomation()" class="btn bg-red-custom text-white px-4 py-2 rounded">
-          <font-awesome-icon :icon="['fas', 'play']" /> Run
+          <font-awesome-icon :icon="['fas', 'play']" />
+          Run
         </button>
       </div>
     </div>
@@ -105,8 +110,12 @@
               </td>
               <td class="py-2 px-4 text-gray-500">{{ action.value || '' }}</td>
               <td class="py-2 px-4" style="text-align: center">
-                <p v-if="action.result === 'PASSED'"><font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2" /></p>
-                <p v-if="action.result === 'FAILED'"><font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2" /></p>
+                <p v-if="action.result === 'PASSED'">
+                  <font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2" />
+                </p>
+                <p v-if="action.result === 'FAILED'">
+                  <font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2" />
+                </p>
               </td>
             </tr>
           </tbody>
@@ -120,6 +129,7 @@
         <!--
         <pre><code class="language-java" v-html="generatedCode"></code></pre>
         -->
+        <CodeBlock :code="testAutomation.generatedCode" language="java" />
         <textarea
           v-model="testAutomation.generatedCode"
           class="w-full min-h-200 border p-2 rounded font-mono text-sm"
@@ -160,9 +170,14 @@
                 'text-red-500': runResult.finalResult !== 'PASSED',
               }"
               class="ml-2"
-              >{{ runResult.finalResult }}</span>
-            <span v-if="runResult.finalResult === 'PASSED'"><font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2" /></span>
-            <span v-if="runResult.finalResult === 'FAILED'"><font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2"/></span>
+              >{{ runResult.finalResult }}</span
+            >
+            <span v-if="runResult.finalResult === 'PASSED'"
+              ><font-awesome-icon :icon="['fas', 'circle-check']" class="passed ml-2"
+            /></span>
+            <span v-if="runResult.finalResult === 'FAILED'"
+              ><font-awesome-icon :icon="['fas', 'circle-xmark']" class="failed ml-2"
+            /></span>
           </p>
         </div>
       </div>
@@ -185,8 +200,14 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import axios from 'axios'
-
+import 'prismjs/themes/prism.css'
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css'; // Default theme, you can choose another
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'; // Line numbers CSS
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import CodeBlock from '@/components/CodeBlock.vue' // Line numbers plugin
 export default {
+  components: { CodeBlock },
   data() {
     return {
       activeTab: 'design',
@@ -256,7 +277,7 @@ export default {
       } catch (error) {
         console.error('Error generating automation:', error)
       } finally {
-        this.loading = false;
+        this.loading = false
       }
     },
     async runAutomation() {
@@ -277,8 +298,8 @@ export default {
       } catch (error) {
         console.error('Error Running automation:', error)
       } finally {
-        this.loading = false;
-        this.$refs.bottomEl?.scrollIntoView({ behavior: 'smooth' });
+        this.loading = false
+        this.$refs.bottomEl?.scrollIntoView({ behavior: 'smooth' })
       }
     },
   },
