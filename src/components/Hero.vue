@@ -4,7 +4,6 @@ import LeftIcon from '@/components/icon/LeftIcon.vue'
 import RightIcon from '@/components/icon/RightIcon.vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import helpIcon from '@/assets/help.svg'
 import youtubeIcon from '@/assets/youtube.svg'
 const router = useRouter()
 const url = ref('')

@@ -1,5 +1,6 @@
 <template>
-  <div class="p-4 space-y-4">
+  <Loading v-if="loading" />
+  <div v-if="!loading" class="p-4 space-y-4">
     <div class="flex space-x-4 gap-2.5">
       <button
         v-for="(suite, index) in testCase.testSuites"
@@ -32,6 +33,7 @@
           v-for="testCase in feature.testCases"
           :key="testCase.testCaseId"
           class="flex justify-between items-center mb-1"
+          @click="navigateToTestCaseDetail(testCase.testCaseId)"
         >
           <div class="flex items-center">
             <input type="checkbox" class="mr-2" />
@@ -48,9 +50,12 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import Loading from '@/components/Loading.vue'
 
+const route = useRoute()
+const router = useRouter()
 const selectedCategory = ref('Functional')
 
 const selectedFeatures = computed(() => {
@@ -70,6 +75,8 @@ const priorityClass = (priority: string) => {
       return 'text-gray-500'
   }
 }
+
+const loading = ref(true)
 
 const testCase = ref({
   title: 'login_feature.docx',
@@ -121,15 +128,24 @@ const testCase = ref({
 
 onMounted(async () => {
   try {
-    const route = useRoute()
     const response = await axios.get(
       `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/test-suites/manual/${route.params.id}`,
     )
     testCase.value = response.data
   } catch (error) {
     console.error('Error fetching automation data:', error)
+  } finally {
+    loading.value = false
   }
 })
+
+const navigateToTestCaseDetail = (testCaseId: number) => {
+  router.push({ name: 'testcase', params: { id: testCaseId } })
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+li {
+  cursor: pointer;
+}
+</style>

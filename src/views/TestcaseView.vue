@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, toRefs, ref } from 'vue'
+import { onMounted, ref, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BackIcon from '@/components/icon/BackIcon.vue'
 import axios from 'axios'
+import Loading from '@/components/Loading.vue'
 
 const route = useRoute()
 const { id } = toRefs(route.params)
@@ -17,6 +18,8 @@ const navigateBack = () => {
   // Logic to navigate back
   router.back()
 }
+
+const loading = ref(true)
 
 const testCase = ref({
   id: 6,
@@ -49,12 +52,15 @@ onMounted(async () => {
     testCase.value = response.data
   } catch (error) {
     console.error('Error fetching automation data:', error)
+  } finally {
+    loading.value = false
   }
 })
 </script>
 
 <template>
-  <div class="p-6 bg-white rounded-lg shadow-md">
+  <Loading v-if="loading" />
+  <div v-if="!loading" class="p-6 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center mb-4">
       <div class="flex space-x-1">
         <BackIcon @click="navigateBack" class="cursor-pointer" />
