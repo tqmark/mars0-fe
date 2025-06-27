@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex">
     <AutomationTestCaseSidebar />
     <div class="w-3/4 p-6">
     <AutomationTestCaseContent :id="id"/>

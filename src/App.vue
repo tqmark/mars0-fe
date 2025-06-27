@@ -18,9 +18,16 @@ const isHomePage = computed(() => {
 <template>
   <div class="flex">
     <LNB v-if="!isHomePage" />
-    <div class="flex-1">
+    <div class="flex-1 screen">
       <Header :isHomePage :userName :userRole/>
       <RouterView />
     </div>
   </div>
 </template>
+
+<style>
+.screen {
+  max-height: calc(100vh - 64px);
+  overflow: auto;
+}
+</style>
