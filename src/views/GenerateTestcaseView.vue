@@ -1,4 +1,5 @@
 <template>
+  <div class="relative min-h-screen bg-white">
   <Loading v-if="loading" />
   <div v-if="!loading" class="p-4 space-y-4">
     <div class="flex space-x-4j justify-between gap-2.5">
@@ -61,6 +62,7 @@
         </li>
       </ul>
     </div>
+  </div>
   </div>
 </template>
 
