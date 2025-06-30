@@ -56,10 +56,18 @@
             </div>
           </td>
           <td class="p-3 flex flex-col">
-            <div
-              v-for="(content, cIndex) in review.contents"
-              :key="cIndex"
-            >
+            <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+              <h2 class="text-xl font-semibold mb-4">Top 5 Most Critical Questions</h2>
+              <ul class="list-disc font-light sub-text pl-5 space-y-2">
+                <li
+                  v-for="(criticalQuestion, cqIndex) in review.mostCriticalQuestions"
+                  :key="cqIndex"
+                >
+                  {{ criticalQuestion }}
+                </li>
+              </ul>
+            </div>
+            <div v-for="(content, cIndex) in review.contents" :key="cIndex">
               <div
                 class="flex w-full items-center justify-between mb-4 font-bold pb-4 pt-4 pl-4 bg-gray-100 rounded-md"
               >
@@ -113,6 +121,7 @@ import arrowDownRedIcon from '@/assets/icondown-red.svg'
 interface Review {
   screen: string
   screenImage: string
+  mostCriticalQuestions: string[]
   contents: Array<{
     category: string
     recommendations: Array<{
@@ -150,9 +159,10 @@ const analyzeSpec = ref<AnalyzeSpec>({
     {
       screen: 'Login',
       screenImage: 'image1.png',
+      mostCriticalQuestions: [],
       contents: [
         {
-          category: "implementation",
+          category: 'implementation',
           recommendations: [
             {
               title: 'Unusual Situations to Consider',
@@ -169,22 +179,23 @@ const analyzeSpec = ref<AnalyzeSpec>({
                 'Rare scenarios like system errors or network issues should also be considered during planning.',
                 'Users may not realize the limitations of the standardized pop-up format, so clear communication is key.',
               ],
-            }
+            },
           ],
         },
         {
-          category: "test_validation",
+          category: 'test_validation',
           recommendations: [
             {
-              title: "How can we verify that the login validation messages are displayed correctly?",
+              title:
+                'How can we verify that the login validation messages are displayed correctly?',
               details: [
-                "Relevant text: If left empty or mistyped, inline error messages should appear.",
-                "Why this would be asked: The specification does not define the exact conditions under which each error message should appear.",
-                "Recommendation: Provide a detailed list of scenarios and expected error messages for each case."
-              ]
-            }
-          ]
-        }
+                'Relevant text: If left empty or mistyped, inline error messages should appear.',
+                'Why this would be asked: The specification does not define the exact conditions under which each error message should appear.',
+                'Recommendation: Provide a detailed list of scenarios and expected error messages for each case.',
+              ],
+            },
+          ],
+        },
       ],
       collapsed: false, // Initialize the collapsed state
     },
