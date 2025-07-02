@@ -1,9 +1,9 @@
 <template>
   <div class="flex">
-    <AutomationTestCaseSidebar />
+    <AutomationTestCaseSidebar :id="id" />
     <div class="w-3/4 p-6">
-    <AutomationTestCaseContent :id="id"/>
-    <!--<AutomationTestResult />-->
+      <AutomationTestCaseContent :id="id" />
+      <!--<AutomationTestResult />-->
     </div>
   </div>
 </template>
@@ -12,8 +12,7 @@ import AutomationTestCaseSidebar from '@/components/AutomationTestCaseSidebar.vu
 import AutomationTestCaseContent from '@/components/AutomationTestCaseContent.vue'
 import { useRoute } from 'vue-router'
 import { toRefs } from 'vue'
-import AutomationTestResult from '@/components/AutomationTestResult.vue'
 
-const route = useRoute();
-const { id } = toRefs(route.params);
+const route = useRoute()
+const { id } = toRefs(route.params)
 </script>

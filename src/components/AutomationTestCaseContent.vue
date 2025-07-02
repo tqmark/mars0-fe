@@ -9,7 +9,7 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-      <div class="flex space-x-1  tab-group">
+      <div class="flex space-x-1 tab-group">
         <button
           @click="activeTab = 'design'"
           :class="{
@@ -29,7 +29,7 @@
           Script
         </button>
       </div>
-      <div class="flex  gap-2">
+      <div class="flex gap-2">
         <button class="btn-secondary border px-4 py-2 rounded">
           <font-awesome-icon :icon="['fas', 'pen']" />
           Edit
@@ -195,11 +195,10 @@
 import type { PropType } from 'vue'
 import axios from 'axios'
 import 'prismjs/themes/prism.css'
-import Prism from 'prismjs'
-import 'prismjs/themes/prism.css' // Default theme, you can choose another
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css' // Line numbers CSS
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import CodeBlock from '@/components/CodeBlock.vue' // Line numbers plugin
+
 export default {
   components: { CodeBlock },
   data() {
@@ -232,7 +231,7 @@ export default {
       this.urls.push('')
     },
     removeUrl(index: number) {
-      if(this.urls.length === 1) return;
+      if (this.urls.length === 1) return
 
       this.urls.splice(index, 1)
     },

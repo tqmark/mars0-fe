@@ -51,7 +51,7 @@ onMounted(async () => {
     )
     testCase.value = response.data
   } catch (error) {
-    console.error('Error fetching automation data:', error)
+    console.error('Error fetching test case data:', error)
   } finally {
     loading.value = false
   }
