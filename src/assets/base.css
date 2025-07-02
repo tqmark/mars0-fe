@@ -81,7 +81,6 @@ button {
 }
 
 button:hover {
-  background-color: #BB3333; /* Slightly darker shade */
   border-color: #AA2222;
 }
 
