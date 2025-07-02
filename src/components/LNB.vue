@@ -27,6 +27,10 @@ const isAnalyzeSpec = computed(() => {
   return route.path.includes('/analyze-specs')
 })
 
+const isAutomationTestCase = computed(() => {
+  return route.path.includes('/auto-testcase')
+})
+
 const isAnalyzeTestCase = computed(() => {
   return route.path === '/generate-testcases'
 })
@@ -88,7 +92,9 @@ const isDemo = computed(() => {
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Manual test case</li>
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Automation test case</li>
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]"
+                :class="{ 'bg-red-600 ': isAutomationTestCase,
+                'border-l-white': isAutomationTestCase}">Automation test case</li>
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Element Locator</li>
           </ul>
         </li>

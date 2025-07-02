@@ -3,8 +3,10 @@
     class="fixed top-[64px] right-[64px] w-64 h-full bg-white shadow-lg border border-gray-200 rounded-md"
   >
     <div class="flex justify-between items-center p-4 border-b">
-      <h2 class="text-lg font-semibold">History</h2>
-      <button @click="closePopup" class="text-red-500">x</button>
+      <h1 class="font-bold text-2xl">History</h1>
+      <button @click="closePopup" class="text-red-500">
+        <img :src="xIcon" alt="Card Image" class="pr-4" />
+      </button>
     </div>
     <div class="p-4">
       <h3 class="font-bold mb-2">Today</h3>
@@ -21,7 +23,13 @@
 </template>
 
 <script lang="ts">
+import xIcon from '@/assets/x-icon.svg'
 export default {
+  computed: {
+    xIcon() {
+      return xIcon
+    }
+  },
   methods: {
     closePopup() {
       this.$emit('close')
