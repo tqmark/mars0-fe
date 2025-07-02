@@ -69,6 +69,44 @@
         </ul>
       </div>
     </div>
+
+    <div
+      v-for="feature in selectedFeatures"
+      :key="feature.name"
+      class="overflow-hidden rounded-md m-5"
+    >
+      <div class="h-[70px] flex items-center justify-between mb-2 bg-[#fff2f2] pl-2 pr-2">
+        <div class="flex">
+          <h3 class="font-semibold text-header">{{ feature.name }}</h3>
+        </div>
+        <div class="flex gap-2">
+          <div class="flex gap-2 p-3 rounded-xl bg-[rgba(255,255,255,0.8)] mr-6">
+          <img :src="eyeIcon" alt="eye-icon" />
+          <button class="color-red-custom ">View UI Screen</button>
+        </div>
+        <img :src="arrowDownRedIcon" />
+        </div>
+      </div>
+      <ul class="pl-2 pr-2 pt-2">
+        <li
+          v-for="(testCase, index) in feature.testCases"
+          :key="testCase.testCaseId"
+          @click="navigateToTestCaseDetail(testCase.testCaseId)"
+          class="flex justify-between items-center rounded-md my-4 p-4 cursor-pointer min-h-12"
+          :class="{'bg-fafafb': index % 2 !== 0 }"
+        >
+          <div class="flex items-center">
+            <span>{{ testCase.description }}</span>
+          </div>
+          <div class="p-2 rounded-md" :class="priorityClass(testCase.priority)">
+          <span>
+            {{ testCase.priority }}
+          </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -198,5 +236,8 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 
 .btn-secondary:hover {
   background-color: #f3f4f6;
+}
+.bg-fafafb{
+  background-color: #fafafb;
 }
 </style>

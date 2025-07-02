@@ -5,7 +5,8 @@
       <img :src="folderIcon" alt="Card Image" class="pr-4" />
       New folder
     </button>
-    <button class="btn bg-red-custom text-white border px-4 py-2 rounded">
+    <button class="btn bg-red-custom flex! border text-white border px-4 py-2 rounded">
+      <img :src="newTCIcon" alt="Card Image" class="pr-4" />
       New TC
     </button>
     </div>
@@ -16,7 +17,7 @@
           <h3 class="font-semibold text-header">Google</h3>
         </div>
         <ul class="ml-6 space-y-2">
-          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-red-100">Validate leap year in 2024</li>
+          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-[rgb(221,68,68,0.1)]">Validate leap year in 2024</li>
           <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl">Validate that users can log in...</li>
         </ul>
       </div>
@@ -26,7 +27,7 @@
           <h3 class="font-semibold text-header">Google</h3>
         </div>
         <ul class="ml-6 space-y-2">
-          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-red-100">Validate leap year in 2024</li>
+          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-[rgb(221,68,68,0.1)]">Validate leap year in 2024</li>
           <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl">Validate that users can log in...</li>
         </ul>
       </div>
@@ -36,7 +37,7 @@
           <h3 class="font-semibold text-header">Google</h3>
         </div>
         <ul class="ml-6 space-y-2">
-          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-red-100">Validate leap year in 2024</li>
+          <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl bg-[rgb(221,68,68,0.1)]">Validate leap year in 2024</li>
           <li class="hover:bg-red-100 cursor-pointer p-4 m-3 rounded-2xl">Validate that users can log in...</li>
         </ul>
       </div>
@@ -47,4 +48,5 @@
 </template>
 <script setup lang="ts">
 import folderIcon from '@/assets/folder.svg'
+import newTCIcon from '@/assets/newtc.svg'
 </script>

@@ -9,7 +9,7 @@
     </div>
 
     <div class="flex justify-between items-center mb-4">
-      <div class="flex space-x-1 gap-2 tab-group">
+      <div class="flex space-x-1  tab-group">
         <button
           @click="activeTab = 'design'"
           :class="{
@@ -29,7 +29,7 @@
           Script
         </button>
       </div>
-      <div class="flex space-x-2 gap-2">
+      <div class="flex  gap-2">
         <button class="btn-secondary border px-4 py-2 rounded">
           <font-awesome-icon :icon="['fas', 'pen']" />
           Edit
@@ -38,7 +38,6 @@
           @click="generateAutomation()"
           class="btn bg-red-custom text-white border px-4 py-2 rounded"
         >
-          <font-awesome-icon :icon="['fas', 'rocket']" />
           Generate Automation
         </button>
         <button @click="runAutomation()" class="btn bg-red-custom text-white px-4 py-2 rounded">
@@ -233,6 +232,8 @@ export default {
       this.urls.push('')
     },
     removeUrl(index: number) {
+      if(this.urls.length === 1) return;
+
       this.urls.splice(index, 1)
     },
     async fetchAutomationData() {
