@@ -82,6 +82,7 @@ button {
 
 button:hover {
   border-color: #AA2222;
+  background-color: #AA2222;
 }
 
 .text-header {
