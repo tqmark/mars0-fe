@@ -1,5 +1,7 @@
 <template>
-  <div class="fixed top-[64px] right-[64px] w-64 h-full bg-white shadow-lg border border-gray-200 rounded-md">
+  <div
+    class="fixed top-[64px] right-[64px] w-64 h-full bg-white shadow-lg border border-gray-200 rounded-md"
+  >
     <div class="flex justify-between items-center p-4 border-b">
       <h2 class="text-lg font-semibold">History</h2>
       <button @click="closePopup" class="text-red-500">x</button>
@@ -18,13 +20,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   methods: {
     closePopup() {
-      this.$emit('close');
-    }
-  }
+      this.$emit('close')
+    },
+  },
 }
 </script>
 
