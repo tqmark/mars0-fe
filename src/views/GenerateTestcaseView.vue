@@ -98,7 +98,7 @@ import HistoryPopup from '@/components/HistoryPopup.vue'
 const route = useRoute()
 const router = useRouter()
 
-const selectedCategory = ref('Functional')
+const selectedCategory = ref('All')
 
 const selectedFeatures = computed(() => {
   if (selectedCategory.value === 'All') {
@@ -225,6 +225,9 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 
 .btn-secondary:hover {
   background-color: #f3f4f6;
+}
+button:hover{
+  background-color: rgba(255,255,255,0.3);
 }
 
 .bg-fafafb {
