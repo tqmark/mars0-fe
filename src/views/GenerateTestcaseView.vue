@@ -81,10 +81,10 @@
         </div>
         <div class="flex gap-2">
           <div class="flex gap-2 p-3 rounded-xl bg-[rgba(255,255,255,0.8)] mr-6">
-          <img :src="eyeIcon" alt="eye-icon" />
-          <button class="color-red-custom ">View UI Screen</button>
-        </div>
-        <img :src="arrowDownRedIcon" />
+            <img :src="eyeIcon" alt="eye-icon" />
+            <button class="color-red-custom">View UI Screen</button>
+          </div>
+          <img :src="arrowDownRedIcon" />
         </div>
       </div>
       <ul class="pl-2 pr-2 pt-2">
@@ -93,20 +93,19 @@
           :key="testCase.testCaseId"
           @click="navigateToTestCaseDetail(testCase.testCaseId)"
           class="flex justify-between items-center rounded-md my-4 p-4 cursor-pointer min-h-12"
-          :class="{'bg-fafafb': index % 2 !== 0 }"
+          :class="{ 'bg-fafafb': index % 2 !== 0 }"
         >
           <div class="flex items-center">
             <span>{{ testCase.description }}</span>
           </div>
           <div class="p-2 rounded-md" :class="priorityClass(testCase.priority)">
-          <span>
-            {{ testCase.priority }}
-          </span>
+            <span>
+              {{ testCase.priority }}
+            </span>
           </div>
         </li>
       </ul>
     </div>
-  </div>
   </div>
 </template>
 
@@ -237,7 +236,8 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 .btn-secondary:hover {
   background-color: #f3f4f6;
 }
-.bg-fafafb{
+
+.bg-fafafb {
   background-color: #fafafb;
 }
 </style>
