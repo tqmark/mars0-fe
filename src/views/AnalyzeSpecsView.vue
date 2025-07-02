@@ -68,7 +68,7 @@
                 </li>
               </ul>
             </div>
-            <div v-for="(content, cIndex) in review.contents" :key="cIndex">
+            <div v-for="(content, cIndex) in review.contents" :key="cIndex" class="min-w-[1050px]">
               <div
                 class="flex w-full items-center justify-between mb-4 font-bold pb-4 pt-4 pl-4 bg-gray-100 rounded-md"
               >
