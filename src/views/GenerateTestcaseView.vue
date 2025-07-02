@@ -176,4 +176,7 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 .btn-secondary {
   color: #44444F;
 }
+.btn-secondary:hover {
+  background-color: #f3f4f6;
+}
 </style>
