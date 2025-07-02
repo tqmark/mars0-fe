@@ -12,6 +12,7 @@ const router = useRouter()
 const generateTC = () => {
   // Logic to generate test case
   console.log(`Generating test case for ID: ${id.value}`)
+  router.push({ name: 'auto-testcase', params: { id: id.value } })
 }
 
 const navigateBack = () => {
