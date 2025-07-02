@@ -81,13 +81,13 @@
                   }}
                 </h2>
                 <h2 v-else>UI/UX</h2>
-
+                <div class="mx-5 cursor-pointer" @click="toggleCollapse(index, cIndex)">
                 <img
                   :src="ArrowBlack"
-                  @click="toggleCollapse(index, cIndex)"
                   :alt="review.collapsed ? 'Expand' : 'Collapse'"
                   :class="review.contents[cIndex].collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
                 />
+                </div>
               </div>
               <template v-if="!content.collapsed">
                 <div
