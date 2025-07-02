@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t ">
+        <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
           <td class="p-3 align-top">
             <div class="justify-items-center cursor-pointer w-full pt-2">
               <img
@@ -82,11 +82,13 @@
                 </h2>
                 <h2 v-else>UI/UX</h2>
                 <div class="mx-5 cursor-pointer" @click="toggleCollapse(index, cIndex)">
-                <img
-                  :src="ArrowBlack"
-                  :alt="review.collapsed ? 'Expand' : 'Collapse'"
-                  :class="review.contents[cIndex].collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
-                />
+                  <img
+                    :src="ArrowBlack"
+                    :alt="review.collapsed ? 'Expand' : 'Collapse'"
+                    :class="
+                      review.contents[cIndex].collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'
+                    "
+                  />
                 </div>
               </div>
               <template v-if="!content.collapsed">
@@ -116,7 +118,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Loading from '@/components/Loading.vue'
 import ArrowBlack from '@/assets/arrow-black.svg' // Define the structure of analyzeSpec
 
@@ -208,10 +210,12 @@ const analyzeSpec = ref<AnalyzeSpec>({
 
 const loading = ref(true)
 const route = useRoute()
+const router = useRouter()
 
 const toggleCollapse = (rIndex: number, Cindex: number) => {
   console.log(analyzeSpec.value)
-  analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed = !analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed
+  analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed =
+    !analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed
 }
 
 let intervalId: number
@@ -257,8 +261,24 @@ async function fetchSpecsData() {
   }
 }
 
-function generateTC() {
-  console.log('Generating test case for ID:', analyzeSpec.value.topicId)
+const generateTC = async () => {
+  const specsId = analyzeSpec.value.topicId
+  console.log('Generating test case for ID:', specsId)
+  try {
+    const response = await axios.post(
+      `https://drs-rag-api-drs.app.linecorp-dev.com/api/v1/specs/${specsId}/generate-manual-test-case`,
+    )
+    const { success, test_suite_id: testSuiteId } = response.data || { success: false }
+    if (success) {
+      navigateToTestCase(testSuiteId)
+    }
+  } catch (error) {
+    console.error('Error fetching specs review data:', error)
+  }
+}
+
+const navigateToTestCase = (testSuiteId: string) => {
+  router.push({ name: 'generate-testcases', params: { id: testSuiteId } })
 }
 
 const currentImage = ref('/mars0-fe/banner.png')
