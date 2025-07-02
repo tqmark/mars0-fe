@@ -34,9 +34,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
-          <td class="p-3">
-            <div class="justify-self-start cursor-pointer">
+        <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t ">
+          <td class="p-3 align-top">
+            <div class="justify-items-center cursor-pointer w-full pt-2">
               <img
                 :src="review.screenImage"
                 :alt="review.screen"

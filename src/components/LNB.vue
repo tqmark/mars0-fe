@@ -23,7 +23,8 @@ const toggleNavbar = () => {
 }
 
 const isAnalyzeSpec = computed(() => {
-  return route.path === '/analyze-specs'
+  console.log('Current route:', route.path)
+  return route.path.includes('/analyze-specs')
 })
 
 const isAnalyzeTestCase = computed(() => {
@@ -83,13 +84,7 @@ const isDemo = computed(() => {
             />
           </div>
           <ul v-if="expandedSection === 'inventory' && !isCollapsed" class="pl-8">
-            <li
-              class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer border-l-2 border-l-[rgba(255,255,255,0.13)]"
-              :class="{ 'bg-red-600': isAnalyzeSpec,
-                'border-l-white': isAnalyzeSpec,
-            }"
-
-            >
+            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">Manual test case</li>
@@ -120,7 +115,14 @@ const isDemo = computed(() => {
             />
           </div>
           <ul v-if="expandedSection === 'analyze' && !isCollapsed" class="pl-8">
-            <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]">
+
+            <li
+              class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer border-l-2 border-l-[rgba(255,255,255,0.13)]"
+              :class="{ 'bg-red-600': isAnalyzeSpec,
+                'border-l-white': isAnalyzeSpec,
+            }"
+
+            >
               <RouterLink to="/analyze-specs">Specs</RouterLink>
             </li>
             <li class="py-2 pl-5 mr-8 hover:bg-red-600 cursor-pointer  border-l-2 border-l-[rgba(255,255,255,0.13)]"
