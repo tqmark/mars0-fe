@@ -102,8 +102,29 @@ const router = useRouter()
 const selectedCategory = ref('All')
 
 const selectedFeatures = computed(() => {
+  const priorityOrder: Record<string, number> = { High: 1, Medium: 2, Low: 3 }
+
   if (selectedCategory.value === 'All') {
-    return testCase.value.testSuites.flatMap((suite) => suite.features)
+    const features = testCase.value.testSuites.flatMap((suite) => suite.features)
+
+    const groupedFeatures = new Map<string, Array<TestCaseFeatureDetail>>()
+    features.forEach((feature) => {
+      const featureName = feature.name
+      if (!groupedFeatures.has(featureName)) {
+        groupedFeatures.set(featureName, [])
+      }
+      groupedFeatures.get(featureName)?.push(...feature.testCases)
+    })
+
+    const finalFeatures = []
+    for (const [name, testCases] of groupedFeatures) {
+      finalFeatures.push({
+        name,
+        testCases: testCases.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]),
+      })
+    }
+
+    return finalFeatures
   }
   const suite = testCase.value.testSuites.find((suite) => suite.category === selectedCategory.value)
   return suite ? suite.features : []
@@ -139,7 +160,29 @@ const getAllTestCaseLength = () => {
 
 const loading = ref(true)
 
-const testCase = ref({
+interface TestCaseFeatureDetail {
+  testCaseId: number
+  description: string
+  priority: string
+}
+
+interface TestCaseFeature {
+  name: string
+  screen: string
+  testCases: TestCaseFeatureDetail[]
+}
+
+interface TestCase {
+  category: string
+  features: TestCaseFeature[]
+}
+
+interface TestSuite {
+  title: string
+  testSuites: TestCase[]
+}
+
+const testCase = ref<TestSuite>({
   title: 'login_feature.docx',
   testSuites: [
     {
@@ -230,13 +273,11 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 .btn-secondary:hover {
   background-color: #f3f4f6;
 }
+
 button:hover {
   background-color: #fff2f2;
 }
 
-.bg-fafafb {
-  background-color: #fafafb;
-}
 .bg-red-custom:hover {
   background-color: #f87171;
 }
