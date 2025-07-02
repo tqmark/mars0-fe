@@ -30,7 +30,7 @@
       <thead>
         <tr class="bg-gray-100">
           <th class="p-3 text-left font-light sub-text">UI Screen</th>
-          <th class="p-3 text-left jjllczfont-light sub-text">Recommendation</th>
+          <th class="p-3 text-left font-light sub-text">Recommendation</th>
         </tr>
       </thead>
       <tbody>
@@ -83,27 +83,27 @@
                 <h2 v-else>UI/UX</h2>
 
                 <img
-                  :src="arrowDownRedIcon"
-                  @click="toggleCollapse(index)"
+                  :src="ArrowBlack"
+                  @click="toggleCollapse(index, cIndex)"
                   :alt="review.collapsed ? 'Expand' : 'Collapse'"
-                  :class="review.collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
+                  :class="review.contents[cIndex].collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
                 />
               </div>
-              <template v-if="!review.collapsed">
-              <div
-                v-for="(recommendation, rIndex) in content.recommendations"
-                :key="rIndex"
-                class="mb-4"
-              >
-                <h4 class="font-semibold text-header pb-4">{{ recommendation.title }}</h4>
-                <ul class="list-disc list-inside pl-6 pb-6 font-light sub-text">
-                  <template v-for="(detail, dIndex) in recommendation.details" :key="dIndex">
-                    <li v-if="!review.collapsed || dIndex < 2">
-                      {{ detail }}
-                    </li>
-                  </template>
-                </ul>
-              </div>
+              <template v-if="!content.collapsed">
+                <div
+                  v-for="(recommendation, rIndex) in content.recommendations"
+                  :key="rIndex"
+                  class="mb-4"
+                >
+                  <h4 class="font-semibold text-header pb-4">{{ recommendation.title }}</h4>
+                  <ul class="list-disc list-inside pl-6 pb-6 font-light sub-text">
+                    <template v-for="(detail, dIndex) in recommendation.details" :key="dIndex">
+                      <li>
+                        {{ detail }}
+                      </li>
+                    </template>
+                  </ul>
+                </div>
               </template>
             </div>
           </td>
@@ -118,7 +118,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import Loading from '@/components/Loading.vue'
-import arrowDownRedIcon from '@/assets/icondown-red.svg'
+import ArrowBlack from '@/assets/arrow-black.svg' // Define the structure of analyzeSpec
 
 // Define the structure of analyzeSpec
 interface Review {
@@ -127,6 +127,7 @@ interface Review {
   mostCriticalQuestions: string[]
   contents: Array<{
     category: string
+    collapsed?: boolean // Add collapsed state for each content
     recommendations: Array<{
       title: string
       details: string[]
@@ -208,8 +209,9 @@ const analyzeSpec = ref<AnalyzeSpec>({
 const loading = ref(true)
 const route = useRoute()
 
-const toggleCollapse = (index: number) => {
-  analyzeSpec.value.reviews[index].collapsed = !analyzeSpec.value.reviews[index].collapsed
+const toggleCollapse = (rIndex: number, Cindex: number) => {
+  console.log(analyzeSpec.value)
+  analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed = !analyzeSpec.value.reviews[rIndex].contents[Cindex].collapsed
 }
 
 let intervalId: number
@@ -228,9 +230,8 @@ onUnmounted(() => {
 
 const handleImageError = (event) => {
   // Provide a fallback image URL or a detailed image URL
-  event.target.src = '/mars0-fe/banner.png';
+  event.target.src = '/mars0-fe/banner.png'
 }
-
 
 async function fetchSpecsData() {
   try {
@@ -243,6 +244,9 @@ async function fetchSpecsData() {
       // Initialize the collapsed state for each review
       analyzeSpec.value.reviews.forEach((review) => {
         review.collapsed = true
+        review.contents.forEach((content) => {
+          content.collapsed = true
+        })
       })
 
       loading.value = false
