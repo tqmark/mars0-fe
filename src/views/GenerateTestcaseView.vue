@@ -50,7 +50,9 @@
         :key="feature.name"
         class="overflow-hidden rounded-md m-5"
       >
-        <div class="h-[70px] flex items-center rounded-xl justify-between mb-2 bg-[#fff2f2] pl-6 pr-2">
+        <div
+          class="h-[70px] flex items-center rounded-xl justify-between mb-2 bg-[#fff2f2] pl-6 pr-2"
+        >
           <div class="flex">
             <h3 class="font-semibold text-header">{{ feature.name }}</h3>
           </div>
@@ -82,7 +84,6 @@
         </ul>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -123,14 +124,17 @@ const priorityClass = (priority: string) => {
   }
 }
 
-
-const getTestCaseLength =(category: string) => {
+const getTestCaseLength = (category: string) => {
   const suite = testCase.value.testSuites.find((suite) => suite.category === category)
   return suite ? suite.features.reduce((acc, feature) => acc + feature.testCases.length, 0) : 0
 }
 
 const getAllTestCaseLength = () => {
-  return testCase.value.testSuites.reduce((acc, suite) => acc + suite.features.reduce((acc, feature) => acc + feature.testCases.length, 0), 0)
+  return testCase.value.testSuites.reduce(
+    (acc, suite) =>
+      acc + suite.features.reduce((acc, feature) => acc + feature.testCases.length, 0),
+    0,
+  )
 }
 
 const loading = ref(true)
@@ -226,11 +230,14 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
 .btn-secondary:hover {
   background-color: #f3f4f6;
 }
-button:hover{
-  background-color: rgba(255,255,255,0.3);
+button:hover {
+  background-color: #fff2f2;
 }
 
 .bg-fafafb {
   background-color: #fafafb;
+}
+.bg-red-custom:hover {
+  background-color: #f87171;
 }
 </style>
