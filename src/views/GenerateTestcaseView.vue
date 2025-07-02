@@ -101,6 +101,9 @@ const router = useRouter()
 const selectedCategory = ref('Functional')
 
 const selectedFeatures = computed(() => {
+  if (selectedCategory.value === 'All') {
+    return testCase.value.testSuites.flatMap((suite) => suite.features)
+  }
   const suite = testCase.value.testSuites.find((suite) => suite.category === selectedCategory.value)
   return suite ? suite.features : []
 })
