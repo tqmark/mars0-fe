@@ -5,7 +5,20 @@
       <div class="flex space-x-4j justify-between gap-2.5">
         <div class="flex space-x-2">
           <button
-            v-for="(suite, index) in testCase.testSuites"
+            class="px-4 py-2 rounded-md ml-5"
+            :class="{
+              'bg-red-custom text-white': selectedCategory === 'All',
+              'bg-gray-200': selectedCategory !== 'All',
+            }"
+            @click="selectedCategory = 'All'"
+          >
+            All
+            <span class="pl-2 pr-2 inline w-8 h-8 bg-[rgba(255,255,255,0.3)] rounded-full">
+              {{ getAllTestCaseLength() }}
+            </span>
+          </button>
+          <button
+            v-for="(suite, index) in [...testCase.testSuites]"
             :key="index"
             class="px-4 py-2 rounded-md"
             :class="{
@@ -16,7 +29,7 @@
           >
             {{ suite.category }}
             <span class="pl-2 pr-2 inline w-8 h-8 bg-[rgba(255,255,255,0.3)] rounded-full">
-              {{ testCase.testSuites.length }}
+              {{ getTestCaseLength(suite.category) }}
             </span>
           </button>
         </div>
@@ -105,6 +118,16 @@ const priorityClass = (priority: string) => {
     default:
       return 'text-gray-500 bg-gray-100'
   }
+}
+
+
+const getTestCaseLength =(category: string) => {
+  const suite = testCase.value.testSuites.find((suite) => suite.category === category)
+  return suite ? suite.features.reduce((acc, feature) => acc + feature.testCases.length, 0) : 0
+}
+
+const getAllTestCaseLength = () => {
+  return testCase.value.testSuites.reduce((acc, suite) => acc + suite.features.reduce((acc, feature) => acc + feature.testCases.length, 0), 0)
 }
 
 const loading = ref(true)
