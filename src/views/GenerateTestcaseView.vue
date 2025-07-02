@@ -15,14 +15,16 @@
         @click="selectedCategory = suite.category"
       >
         {{ suite.category }}
+        <div class="pl-2 pr-2 inline w-8 h-8 bg-[rgba(255,255,255,0.3)] rounded-full">{{testCase.testSuites.length}} </div>
+
       </button>
       </div>
-    <div class="flex space-x-2">
+    <div class="flex space-x-2 pr-6">
       <button class="btn-secondary border px-4 py-2 rounded">
         <font-awesome-icon :icon="['fas', 'print']" />
         Export
       </button>
-      <button @click="showPopup = true" class="btn-secondary border px-4 py-2 rounded">
+      <button @click="showPopup = true" class="btn-secondary border px-4 py-2 rounded pr-6">
         View History
       </button>
       <HistoryPopup v-if="showPopup" @close="showPopup = false" />
@@ -34,22 +36,25 @@
       :key="feature.name"
       class="overflow-hidden rounded-md m-5"
     >
-      <div class="h-[50px] flex items-center justify-between mb-2 bg-[#fff2f2] pl-2 pr-2">
+      <div class="h-[70px] flex items-center justify-between mb-2 bg-[#fff2f2] pl-2 pr-2">
         <div class="flex">
           <h3 class="font-semibold text-header">{{ feature.name }}</h3>
         </div>
         <div class="flex gap-2">
+          <div class="flex gap-2 p-3 rounded-xl bg-[rgba(255,255,255,0.8)] mr-6">
           <img :src="eyeIcon" alt="eye-icon" />
-          <button class="color-red-custom">View UI Screen</button>
-          <img :src="arrowDownRedIcon" />
+          <button class="color-red-custom ">View UI Screen</button>
+        </div>
+        <img :src="arrowDownRedIcon" />
         </div>
       </div>
       <ul class="pl-2 pr-2 pt-2">
         <li
-          v-for="testCase in feature.testCases"
+          v-for="(testCase, index) in feature.testCases"
           :key="testCase.testCaseId"
           @click="navigateToTestCaseDetail(testCase.testCaseId)"
-          class="flex justify-between items-center my-4 cursor-pointer"
+          class="flex justify-between items-center rounded-md my-4 p-4 cursor-pointer min-h-12"
+          :class="{'bg-gray-100': index % 2 !== 0 }"
         >
           <div class="flex items-center">
             <span>{{ testCase.description }}</span>
@@ -166,3 +171,9 @@ const navigateToTestCaseDetail = (testCaseId: number) => {
   router.push({ name: 'testcase', params: { id: testCaseId } })
 }
 </script>
+
+<style scoped>
+.btn-secondary {
+  color: #44444F;
+}
+</style>

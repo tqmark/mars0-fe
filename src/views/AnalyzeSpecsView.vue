@@ -5,7 +5,7 @@
       <h1 class="text-xl font-bold text-header">
         {{ analyzeSpec.title || analyzeSpec.wikiUrl.join(', ') }}
       </h1>
-      <div class="flex space-x-2">
+      <div class="flex space-x-2 pr-6">
         <button class="btn-secondary border px-4 py-2 rounded">View History</button>
         <button class="btn bg-red-custom text-white border px-4 py-2 rounded">
           Save to Inventory
@@ -36,12 +36,13 @@
       <tbody>
         <tr v-for="(review, index) in analyzeSpec.reviews" :key="index" class="border-t">
           <td class="p-3">
-            <div class="justify-self-center cursor-pointer">
+            <div class="justify-self-start cursor-pointer">
               <img
                 :src="review.screenImage"
                 :alt="review.screen"
-                class="w-64 h-64 object-cover rounded-lg"
+                class="w-88 h-80 object-cover rounded-lg"
                 @click="openModal(review.screenImage)"
+                @error="handleImageError"
               />
             </div>
             <div
@@ -88,6 +89,7 @@
                   :class="review.collapsed ? 'rotate-180 pl-4' : 'pr-4 stroke-red'"
                 />
               </div>
+              <template v-if="!review.collapsed">
               <div
                 v-for="(recommendation, rIndex) in content.recommendations"
                 :key="rIndex"
@@ -102,6 +104,7 @@
                   </template>
                 </ul>
               </div>
+              </template>
             </div>
           </td>
         </tr>
@@ -223,6 +226,12 @@ onUnmounted(() => {
   }
 })
 
+const handleImageError = (event) => {
+  // Provide a fallback image URL or a detailed image URL
+  event.target.src = '/mars0-fe/banner.png';
+}
+
+
 async function fetchSpecsData() {
   try {
     const response = await axios.get(
@@ -233,7 +242,7 @@ async function fetchSpecsData() {
       analyzeSpec.value = response.data
       // Initialize the collapsed state for each review
       analyzeSpec.value.reviews.forEach((review) => {
-        review.collapsed = false
+        review.collapsed = true
       })
 
       loading.value = false
