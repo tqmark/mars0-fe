@@ -41,17 +41,31 @@
                 :src="review.screenImage"
                 :alt="review.screen"
                 class="w-88 h-80 object-cover rounded-lg"
-                @click="openModal(review.screenImage)"
+                @click="openModal(review.screenImage, review.screen)"
                 @error="handleImageError"
               />
             </div>
-            <div
-              v-if="modalOpen"
-              class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
-              @click="closeModal"
-            >
-              <img :src="currentImage" alt="FullSize Image" class="object-cover rounded-lg" />
-            </div>
+            <transition name="zoom">
+              <div
+                v-if="modalOpen"
+                class="fixed inset-0  bg-[#92929d26] flex justify-center items-center z-50"
+                @click.self="closeModal"
+              >
+                <button  @click="closeModal" class="text-red-500 absolute top-20 right-20 transition">
+                  <img :src="xIcon" alt="Card Image" class="pr-4" />
+                </button>
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden">
+                  <img
+                    :src="currentImage"
+                    alt="FullSize Image"
+                    class="object-cover rounded-t-lg max-h-[65vh] w-full"
+                  />
+                  <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">{{currentRviewScreen}}</h2>
+                  </div>
+                </div>
+              </div>
+            </transition>
             <div class="justify-self-center pt-6 tmodalext-lg">
               {{ review.screen.toUpperCase() }}
             </div>
@@ -120,7 +134,8 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
 import Loading from '@/components/Loading.vue'
-import ArrowBlack from '@/assets/arrow-black.svg' // Define the structure of analyzeSpec
+import ArrowBlack from '@/assets/arrow-black.svg'
+import xIcon from '@/assets/x-white.svg' // Define the structure of analyzeSpec
 
 // Define the structure of analyzeSpec
 interface Review {
@@ -211,6 +226,8 @@ const analyzeSpec = ref<AnalyzeSpec>({
 const loading = ref(true)
 const route = useRoute()
 const router = useRouter()
+const currentRviewScreen = ref('')
+
 
 const toggleCollapse = (rIndex: number, Cindex: number) => {
   console.log(analyzeSpec.value)
@@ -284,8 +301,9 @@ const navigateToTestCase = (testSuiteId: string) => {
 const currentImage = ref('/mars0-fe/banner.png')
 const modalOpen = ref(false)
 
-function openModal(imageUrl: string) {
+function openModal(imageUrl: string, currentScreen: string) {
   currentImage.value = imageUrl
+  currentRviewScreen.value = `${currentScreen}`
   modalOpen.value = true
 }
 
@@ -294,3 +312,17 @@ function closeModal() {
   modalOpen.value = false
 }
 </script>
+<style scoped>
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: transform 0.3s ease;
+}
+.zoom-enter-from,
+.zoom-leave-to {
+  transform: scale(0.9);
+}
+.zoom-enter-to,
+.zoom-leave-from {
+  transform: scale(1);
+}
+</style>

@@ -71,13 +71,38 @@
             <img :src="arrowDownRedIcon" alt="arrow down read icon" class="cursor-pointer" />
           </div>
         </div>
-        <div
-          v-if="modalOpen"
-          class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
-          @click="closeModal"
-        >
-          <img :src="currentImage" alt="FullSize Image" class="object-cover rounded-lg" />
-        </div>
+<!--        <transition name="zoom">-->
+<!--          <div-->
+<!--            v-if="modalOpen"-->
+<!--            class="fixed inset-0 bg-[#92929d26] flex justify-center items-center z-50"-->
+<!--            @click="closeModal"-->
+<!--          >-->
+<!--            <img-->
+<!--              :src="currentImage"-->
+<!--              alt="FullSize Image"-->
+<!--              class="object-cover rounded-lg transition-transform duration-300 transform"-->
+<!--            />-->
+<!--          </div>-->
+<!--        </transition>-->
+
+        <transition name="zoom">
+          <div
+            v-if="modalOpen"
+            class="fixed inset-0  bg-[#92929d26] flex justify-center items-center z-50"
+            @click.self="closeModal"
+          >
+            <button  @click="closeModal" class="text-red-500 absolute top-20 right-20 transition">
+              <img :src="xIcon" alt="Card Image" class="pr-4" />
+            </button>
+            <div class="relative bg-white rounded-lg shadow-lg overflow-hidden">
+              <img
+                :src="currentImage"
+                alt="FullSize Image"
+                class="object-cover rounded-t-lg max-h-[65vh] w-full"
+              />
+            </div>
+          </div>
+        </transition>
         <ul class="pl-2 pr-2 pt-2">
           <li
             v-for="(testCase, index) in feature.testCases"
@@ -110,6 +135,7 @@ import eyeIcon from '@/assets/eye.svg'
 import arrowDownRedIcon from '@/assets/icondown-red.svg'
 import HistoryPopup from '@/components/HistoryPopup.vue'
 
+import xIcon from '@/assets/x-white.svg' // Define the structure of analyzeSpec
 const route = useRoute()
 const router = useRouter()
 
@@ -319,5 +345,17 @@ button:hover {
 
 .bg-red-custom:hover {
   background-color: #f87171;
+}
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: transform 0.3s ease;
+}
+.zoom-enter-from,
+.zoom-leave-to {
+  transform: scale(0.6);
+}
+.zoom-enter-to,
+.zoom-leave-from {
+  transform: scale(1);
 }
 </style>
