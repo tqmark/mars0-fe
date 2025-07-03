@@ -5,7 +5,7 @@
       <div class="flex space-x-4j justify-between gap-2.5">
         <div class="flex space-x-2">
           <button
-            class="px-4 py-2 rounded-md ml-5"
+            class="px-4 py-2 rounded-md ml-5 cursor-pointer"
             :class="{
               'bg-red-custom text-white': selectedCategory === 'All',
               'bg-gray-200': selectedCategory !== 'All',
@@ -20,7 +20,7 @@
           <button
             v-for="(suite, index) in [...testCase.testSuites]"
             :key="index"
-            class="px-4 py-2 rounded-md"
+            class="px-4 py-2 rounded-md cursor-pointer"
             :class="{
               'bg-red-custom text-white': selectedCategory === suite.category,
               'bg-gray-200': selectedCategory !== suite.category,
@@ -34,11 +34,14 @@
           </button>
         </div>
         <div class="flex space-x-2 pr-6">
-          <button class="btn-secondary border px-4 py-2 rounded">
+          <button class="btn-secondary border px-4 py-2 rounded cursor-pointer">
             <font-awesome-icon :icon="['fas', 'print']" />
             Export
           </button>
-          <button @click="showPopup = true" class="btn-secondary border px-4 py-2 rounded pr-6">
+          <button
+            @click="showPopup = true"
+            class="btn-secondary border px-4 py-2 rounded pr-6 cursor-pointer"
+          >
             View History
           </button>
           <HistoryPopup v-if="showPopup" @close="showPopup = false" />
@@ -57,12 +60,23 @@
             <h3 class="font-semibold text-header">{{ feature.name }}</h3>
           </div>
           <div class="flex gap-2 pr-4">
-            <div class="flex gap-2 p-3 rounded-xl bg-[rgba(255,255,255,0.8)] mr-4">
+            <div
+              class="flex gap-2 p-3 rounded-xl bg-[rgba(255,255,255,0.8)] mr-4 cursor-pointer"
+              @click="openModal(feature.screenImage)"
+              @error="handleImageError"
+            >
               <img :src="eyeIcon" alt="eye-icon" />
-              <button class="color-red-custom">View UI Screen</button>
+              <button class="color-red-custom cursor-pointer">View UI Screen</button>
             </div>
-            <img :src="arrowDownRedIcon" alt="arrow down read icon" />
+            <img :src="arrowDownRedIcon" alt="arrow down read icon" class="cursor-pointer" />
           </div>
+        </div>
+        <div
+          v-if="modalOpen"
+          class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+          @click="closeModal"
+        >
+          <img :src="currentImage" alt="FullSize Image" class="object-cover rounded-lg" />
         </div>
         <ul class="pl-2 pr-2 pt-2">
           <li
@@ -108,18 +122,25 @@ const selectedFeatures = computed(() => {
     const features = testCase.value.testSuites.flatMap((suite) => suite.features)
 
     const groupedFeatures = new Map<string, Array<TestCaseFeatureDetail>>()
+    const groupedImages = new Map<string, string>()
     features.forEach((feature) => {
       const featureName = feature.name
+
       if (!groupedFeatures.has(featureName)) {
         groupedFeatures.set(featureName, [])
       }
       groupedFeatures.get(featureName)?.push(...feature.testCases)
+
+      if (!groupedImages.has(featureName)) {
+        groupedImages.set(featureName, feature.screenImage)
+      }
     })
 
-    const finalFeatures = []
+    const finalFeatures: TestCaseFeature[] = []
     for (const [name, testCases] of groupedFeatures) {
       finalFeatures.push({
         name,
+        screenImage: groupedImages.get(name),
         testCases: testCases.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]),
       })
     }
@@ -168,7 +189,7 @@ interface TestCaseFeatureDetail {
 
 interface TestCaseFeature {
   name: string
-  screen: string
+  screenImage: string
   testCases: TestCaseFeatureDetail[]
 }
 
@@ -190,7 +211,7 @@ const testCase = ref<TestSuite>({
       features: [
         {
           name: 'Create request',
-          screen: 'image1.png',
+          screenImage: 'image1.png',
           testCases: [
             {
               testCaseId: 1,
@@ -208,7 +229,7 @@ const testCase = ref<TestSuite>({
         },
         {
           name: 'Edit request',
-          screen: 'image2.png',
+          screenImage: 'image2.png',
           testCases: [
             {
               testCaseId: 3,
@@ -262,6 +283,24 @@ async function fetchTestSuiteData() {
 
 const navigateToTestCaseDetail = (testCaseId: number) => {
   router.push({ name: 'testcase', params: { id: testCaseId } })
+}
+
+const currentImage = ref('/mars0-fe/banner.png')
+const modalOpen = ref(false)
+
+function openModal(imageUrl: string) {
+  currentImage.value = imageUrl
+  modalOpen.value = true
+}
+
+function closeModal() {
+  currentImage.value = ''
+  modalOpen.value = false
+}
+
+const handleImageError = (event) => {
+  // Provide a fallback image URL or a detailed image URL
+  event.target.src = '/mars0-fe/banner.png'
 }
 </script>
 

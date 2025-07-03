@@ -58,8 +58,7 @@
   </div>
 </template>
 
-<script>
-import { onMounted } from 'vue';
+<script lang="ts">
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
